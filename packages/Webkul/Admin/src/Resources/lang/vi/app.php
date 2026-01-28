@@ -1020,6 +1020,7 @@ return [
                     'delete-success'      => 'Sự kiện đã được xóa thành công.',
                     'delete-failed'       => 'Không thể xóa sự kiện.',
                     'mass-delete-success' => 'Các sự kiện đã được xóa thành công',
+                    'delete-failed-associated-campaigns' => 'Không thể xóa sự kiện vì nó đang được liên kết với các chiến dịch. Vui lòng hủy liên kết hoặc cập nhật các chiến dịch đó trước khi xóa.',
                     'datagrid'            => [
                         'delete'      => 'Xóa',
                         'edit'        => 'Chỉnh sửa',
