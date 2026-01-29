@@ -65,6 +65,7 @@ class QuoteDataGrid extends DataGrid
             'label'      => trans('admin::app.quotes.index.datagrid.subject'),
             'type'       => 'string',
             'filterable' => true,
+            'searchable' => true,
             'sortable'   => true,
         ]);
 
@@ -73,6 +74,7 @@ class QuoteDataGrid extends DataGrid
             'label'              => trans('admin::app.quotes.index.datagrid.sales-person'),
             'type'               => 'string',
             'sortable'           => true,
+            'searchable'         => true,
             'filterable'         => true,
             'filterable_type'    => 'searchable_dropdown',
             'filterable_options' => [
@@ -89,6 +91,7 @@ class QuoteDataGrid extends DataGrid
             'label'              => trans('admin::app.quotes.index.datagrid.person'),
             'type'               => 'string',
             'sortable'           => true,
+            'searchable'         => true,
             'filterable'         => true,
             'filterable_type'    => 'searchable_dropdown',
             'filterable_options' => [
