@@ -197,7 +197,8 @@ class QuoteController extends Controller
             'Quote_'.$quote->subject.'_'.$quote->created_at->format('d-m-Y')
         );
     }
-     /**
+
+    /**
      * Additional validation for quote product items.
      */
     private function additionalValidation(): void
