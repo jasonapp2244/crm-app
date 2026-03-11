@@ -206,7 +206,7 @@ return [
         'icon-class' => '',
         'sort'       => 2,
     ], [
-        'key'        => 'settings.inventory.warehouses',
+        'key'        => 'settings.inventory.warehouse',
         'name'       => 'admin::app.layouts.warehouses',
         'info'       => 'admin::app.layouts.warehouses-info',
         'route'      => 'admin.settings.warehouses.index',
