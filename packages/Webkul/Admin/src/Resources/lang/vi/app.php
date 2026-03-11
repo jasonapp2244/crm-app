@@ -45,6 +45,7 @@ return [
         'event'           => 'Sự kiện',
         'campaigns'       => 'Chiến dịch',
         'warehouses'      => 'Kho',
+        'inventory'       => 'Hàng tồn kho',
     ],
     'users' => [
         'activate-warning' => 'Tài khoản của bạn chưa được kích hoạt. Vui lòng liên hệ quản trị viên.',
@@ -2150,6 +2151,8 @@ return [
         'warehouses'           => 'Kho hàng',
         'warehouse'            => 'Kho hàng',
         'warehouses-info'      => 'Thêm, chỉnh sửa hoặc xóa kho hàng từ CRM',
+        'inventory'            => 'Hàng tồn kho',
+        'inventory-info'       => 'Quản lý tất cả các cài đặt liên quan đến hàng tồn kho trong CRM',
         'data_transfer'        => 'Data Transfer',
         'data_transfer_info'   => 'Manage persons, products and leads data transfer related settings in the CRM',
     ],

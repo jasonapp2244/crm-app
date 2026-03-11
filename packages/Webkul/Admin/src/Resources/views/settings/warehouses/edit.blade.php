@@ -31,8 +31,9 @@
 
                 <div class="flex items-center gap-x-2.5">
                     <div class="flex items-center gap-x-2.5">
-                        {!! view_render_event('admin.settings.warehouses.edit.save_button.after') !!}
-                        @if (bouncer()->hasPermission('settings.warehouse.edit'))
+                        {!! view_render_event('admin.settings.warehouse.edit.save_button.after') !!}
+                        
+                        @if (bouncer()->hasPermission('settings.inventory.warehouse.edit'))
                         <!-- Create button for person -->
                         <button
                             type="submit"

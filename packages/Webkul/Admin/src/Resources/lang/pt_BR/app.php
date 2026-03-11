@@ -45,6 +45,7 @@ return [
         'event'           => 'Evento',
         'campaigns'       => 'Campanhas',
         'warehouses'      => 'Armazéns',
+        'inventory'       => 'Estoque',
     ],
     'users' => [
         'activate-warning' => 'Sua conta ainda não foi ativada. Por favor, entre em contato com o administrador.',
@@ -2150,6 +2151,8 @@ return [
         'warehouses'           => 'Depósitos',
         'warehouse'            => 'Depósito',
         'warehouses-info'      => 'Adicionar, editar ou excluir depósitos do CRM',
+        'inventory'            => 'Estoque',
+        'inventory-info'       => 'Gerenciar todas as configurações relacionadas ao estoque no CRM',
         'data_transfer'        => 'Data Transfer',
         'data_transfer_info'   => 'Manage persons, products and leads data transfer related settings in the CRM',
     ],

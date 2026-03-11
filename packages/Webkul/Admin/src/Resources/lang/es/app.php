@@ -45,6 +45,7 @@ return [
         'event'           => 'Evento',
         'campaigns'       => 'Campañas',
         'warehouses'      => 'Almacenes',
+        'inventory'       => 'Inventario',
     ],
     'users' => [
         'activate-warning' => 'Tu cuenta aún no está activada. Por favor, contacta al administrador.',
@@ -2150,6 +2151,8 @@ return [
         'warehouses'           => 'Almacenes',
         'warehouse'            => 'Almacén',
         'warehouses-info'      => 'Agregar, editar o eliminar almacenes del CRM',
+        'inventory'            => 'Inventario',
+        'inventory-info'       => 'Gestionar todos los ajustes relacionados con el inventario en el CRM',
         'data_transfer'        => 'Transferencia de Datos',
         'data_transfer_info'   => 'Gestionar la configuración relacionada con la transferencia de datos de personas, productos y clientes potenciales en el CRM',
     ],

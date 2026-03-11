@@ -123,7 +123,7 @@ class WarehouseDataGrid extends DataGrid
      */
     public function prepareActions()
     {
-        if (bouncer()->hasPermission('settings.warehouse.view')) {
+        if (bouncer()->hasPermission('settings.inventory.warehouse')) {
             $this->addAction([
                 'icon'   => 'icon-eye',
                 'title'  => trans('admin::app.settings.warehouses.index.datagrid.view'),
@@ -134,7 +134,7 @@ class WarehouseDataGrid extends DataGrid
             ]);
         }
 
-        if (bouncer()->hasPermission('settings.warehouse.edit')) {
+        if (bouncer()->hasPermission('settings.inventory.warehouse.edit')) {
             $this->addAction([
                 'icon'   => 'icon-edit',
                 'title'  => trans('admin::app.settings.warehouses.index.datagrid.edit'),
@@ -145,7 +145,7 @@ class WarehouseDataGrid extends DataGrid
             ]);
         }
 
-        if (bouncer()->hasPermission('settings.warehouse.delete')) {
+        if (bouncer()->hasPermission('settings.inventory.warehouse.delete')) {
             $this->addAction([
                 'icon'   => 'icon-delete',
                 'title'  => trans('admin::app.settings.warehouses.index.datagrid.delete'),

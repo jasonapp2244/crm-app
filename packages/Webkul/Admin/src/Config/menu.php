@@ -199,14 +199,14 @@ return [
         'sort'       => 3,
         'icon-class' => 'icon-settings-type',
     ], [
-        'key'        => 'settings.warehouse',
-        'name'       => 'admin::app.layouts.warehouse',
-        'info'       => 'admin::app.layouts.warehouses-info',
+        'key'        => 'settings.inventory',
+        'name'       => 'admin::app.layouts.inventory',
+        'info'       => 'admin::app.layouts.inventory-info',
         'route'      => 'admin.settings.pipelines.index',
         'icon-class' => '',
         'sort'       => 2,
     ], [
-        'key'        => 'settings.warehouse.view',
+        'key'        => 'settings.inventory.warehouses',
         'name'       => 'admin::app.layouts.warehouses',
         'info'       => 'admin::app.layouts.warehouses-info',
         'route'      => 'admin.settings.warehouses.index',

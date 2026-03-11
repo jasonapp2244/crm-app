@@ -45,6 +45,7 @@ return [
         'event'           => 'Event',
         'campaigns'       => 'Campaigns',
         'warehouses'      => 'Warehouses',
+        'inventory'       => 'Inventory',
     ],
 
     'users' => [
@@ -2352,6 +2353,8 @@ return [
         'warehouses'           => 'Warehouses',
         'warehouse'            => 'Warehouse',
         'warehouses-info'      => 'Add, edit or delete warehouses from CRM',
+        'inventory'            => 'Inventory',
+        'inventory-info'       => 'Manage all your inventory related settings in the CRM',
         'data_transfer'        => 'Data Transfer',
         'data_transfer_info'   => 'Manage persons, products and leads data transfer related settings in the CRM',
     ],
