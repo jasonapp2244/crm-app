@@ -44,6 +44,8 @@ return [
         'import'          => 'İthalat',
         'event'           => 'Etkinlik',
         'campaigns'       => 'Kampanyalar',
+        'warehouses'      => 'Depolar',
+        'inventory'       => 'Envanter',
     ],
     'users' => [
         'activate-warning' => 'Hesabınız henüz etkinleştirilmedi. Lütfen yönetici ile iletişime geçin.',
@@ -2151,6 +2153,8 @@ return [
         'warehouses-info'      => 'CRM’den depoları ekleyin, düzenleyin veya silin',
         'data_transfer'        => 'Veri Transferi',
         'data_transfer_info'   => 'CRM’de kişiler, ürünler ve potansiyel müşterilere ilişkin veri transferi ayarlarını yönetin',
+        'inventory'            => 'Envanter',
+        'inventory-info'       => 'CRM’deki tüm envanter ayarlarını yönetin',
     ],
     'user' => [
         'account' => [

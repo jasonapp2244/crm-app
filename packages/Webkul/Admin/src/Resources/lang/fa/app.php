@@ -44,6 +44,8 @@ return [
         'import'          => 'وارد کردن',
         'event'           => 'رویداد',
         'campaigns'       => 'کمپین‌ها',
+        'warehouses'      => 'انبارها',
+        'inventory'       => 'موجودی',
     ],
     'users' => [
         'activate-warning' => 'حساب شما هنوز فعال نشده است. لطفاً با مدیر سیستم تماس بگیرید.',
@@ -2147,6 +2149,8 @@ return [
         'warehouses'           => 'انبارها',
         'warehouse'            => 'انبار',
         'warehouses-info'      => 'اضافه، ویرایش یا حذف انبارها از CRM',
+        'inventory'            => 'موجودی',
+        'inventory-info'       => 'مدیریت تمام تنظیمات مربوط به موجودی در CRM',
         'data_transfer'        => 'انتقال داده',
         'data_transfer_info'   => 'مدیریت تنظیمات مربوط به انتقال داده‌های اشخاص، محصولات و سرنخ‌ها در CRM',
     ],
