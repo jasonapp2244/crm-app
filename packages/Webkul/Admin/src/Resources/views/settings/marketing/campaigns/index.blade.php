@@ -487,7 +487,7 @@
 
                         this.$axios.post(
                             isUpdating
-                            ? "{{ route('admin.settings.marketing.campaigns.update', '__PLACEHOLDER__') }}".replace('__PLACEHOLDER__', paramas.id)
+                            ? "{{ route('admin.settings.marketing.campaigns.update', ':id') }}".replace(':id', paramas.id)
                             : "{{ route('admin.settings.marketing.campaigns.store') }}",
                             campaignForm,
                         )
@@ -510,7 +510,7 @@
                      * @param {Object} record
                      */
                     edit(record) {
-                        this.$axios.get("{{ route('admin.settings.marketing.campaigns.edit', '__PLACEHOLDER__') }}".replace('__PLACEHOLDER__', record.id))
+                        this.$axios.get("{{ route('admin.settings.marketing.campaigns.edit', ':id') }}".replace(':id', record.id))
                             .then(response => {
                                 this.campaign = response.data.data;
 

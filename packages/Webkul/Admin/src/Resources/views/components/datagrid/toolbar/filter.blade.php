@@ -1045,7 +1045,7 @@
                         params._method = 'PUT';
                     }
 
-                    this.$axios.post(params.id ? "{{ route('admin.datagrid.saved_filters.update', '__PLACEHOLDER__') }}".replace('__PLACEHOLDER__', params.id) : "{{ route('admin.datagrid.saved_filters.store') }}", {
+                    this.$axios.post(params.id ? "{{ route('admin.datagrid.saved_filters.update', ':id') }}".replace(':id', params.id) : "{{ route('admin.datagrid.saved_filters.store') }}", {
                         src: this.src,
                         applied,
                         ...params,
@@ -1102,7 +1102,7 @@
                 deleteSavedFilter(filter) {
                     this.$emitter.emit('open-confirm-modal', {
                         agree: () => {
-                            this.$axios.delete("{{ route('admin.datagrid.saved_filters.destroy', '__PLACEHOLDER__') }}".replace('__PLACEHOLDER__', filter.id))
+                            this.$axios.delete("{{ route('admin.datagrid.saved_filters.destroy', ':id') }}".replace(':id', filter.id))
                                 .then(response => {
                                     this.applySavedFilter(null);
 

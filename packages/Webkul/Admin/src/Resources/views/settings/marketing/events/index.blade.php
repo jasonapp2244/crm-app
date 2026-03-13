@@ -373,7 +373,7 @@
 
                         this.$axios.post(
                             isUpdating
-                            ? "{{ route('admin.settings.marketing.events.update', '__PLACEHOLDER__') }}".replace('__PLACEHOLDER__', paramas.id)
+                            ? "{{ route('admin.settings.marketing.events.update', ':id') }}".replace(':id', paramas.id)
                             : "{{ route('admin.settings.marketing.events.store') }}", 
                             paramas
                         )
