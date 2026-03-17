@@ -82,11 +82,19 @@ jobs:
       - name: Verify Activity Binding
         run: |
           php artisan tinker --execute="
+          // 1) Laravel container binding (needed by repositories)
           if (! app()->bound(Webkul\\Activity\\Contracts\\Activity::class)) {
-              throw new RuntimeException('Activity contract is not bound');
+              throw new RuntimeException('Activity contract is NOT bound in Laravel container');
+          }
+
+          // 2) Concord model-proxy registry (needed by ActivityProxy::modelClass())
+          \$concord = app('concord');
+          if (! \$concord->model(Webkul\\Activity\\Contracts\\Activity::class)) {
+              throw new RuntimeException('Activity contract is NOT registered in Concord model registry');
           }
 
           dump(app()->make(Webkul\\Activity\\Contracts\\Activity::class)::class);
+          dump(\$concord->model(Webkul\\Activity\\Contracts\\Activity::class));
           "
 
       # - name: Seed Product Table
