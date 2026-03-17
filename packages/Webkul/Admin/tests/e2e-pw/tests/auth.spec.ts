@@ -23,8 +23,15 @@ test("should be able to login", async ({ page }) => {
 test("should be able to logout", async ({ adminPage }) => {
     await expect(adminPage).toHaveURL(/\/admin\/dashboard/);
 
-    await adminPage.locator("header button.rounded-full").first().click();
-    await adminPage.getByRole("link", { name: "Sign Out" }).click();
+    const profileToggle = adminPage.getByRole("banner").getByRole("button").last();
+
+    await expect(profileToggle).toBeVisible();
+    await profileToggle.click();
+
+    const signOutLink = adminPage.getByRole("link", { name: "Sign Out" });
+
+    await expect(signOutLink).toBeVisible();
+    await signOutLink.click();
 
     await expect(adminPage).toHaveURL(/\/admin\/login/);
     await expect(adminPage.locator('input[name="password"]')).toBeVisible();
