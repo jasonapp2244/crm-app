@@ -76,6 +76,19 @@ jobs:
       - name: Running Krayin Installer
         run: php artisan krayin-crm:install --skip-env-check --skip-admin-creation
 
+      - name: Clear Laravel Caches
+        run: php artisan optimize:clear
+
+      - name: Verify Activity Binding
+        run: |
+          php artisan tinker --execute="
+          if (! app()->bound(Webkul\\Activity\\Contracts\\Activity::class)) {
+              throw new RuntimeException('Activity contract is not bound');
+          }
+
+          dump(app()->make(Webkul\\Activity\\Contracts\\Activity::class)::class);
+          "
+
       # - name: Seed Product Table
       #   run: php artisan db:seed --class="Webkul\\Installer\\Database\\Seeders\\ProductTableSeeder"
 
