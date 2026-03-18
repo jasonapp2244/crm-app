@@ -16,8 +16,12 @@ class CanInstall
     public function handle(Request $request, Closure $next): mixed
     {
         if (Str::contains($request->getPathInfo(), '/install')) {
-            if ($this->isAlreadyInstalled() && ! $request->ajax()) {
-                return redirect()->route('admin.dashboard.index');
+            if ($this->isAlreadyInstalled()) {
+                if($request->ajax()) {
+                    abort(403);
+                } else {
+                    return redirect()->route('admin.dashboard.index');
+                }
             }
         } else {
             if (! $this->isAlreadyInstalled()) {
