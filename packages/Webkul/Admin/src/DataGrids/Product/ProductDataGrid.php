@@ -80,7 +80,7 @@ class ProductDataGrid extends DataGrid
             'filterable' => true,
             'closure' => function ($row) {
                 return core()->formatBasePrice($row->price, 2);
-            } 
+            },
         ]);
 
         $this->addColumn([
