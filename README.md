@@ -66,7 +66,7 @@ Take advantage of two of the hottest frameworks used in this project -- Laravel 
 
 -   **SERVER**: Apache 2 or NGINX.
 -   **RAM**: 3 GB or higher.
--   **PHP**: 8.2 or higher
+-   **PHP**: 8.3 or higher
 -   **Composer**: 2.5 or higher
 -   **For MySQL users**: 8.0.32 or higher.
 
