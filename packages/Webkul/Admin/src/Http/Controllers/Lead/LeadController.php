@@ -88,7 +88,7 @@ class LeadController extends Controller
             $pipeline = $this->pipelineRepository->getDefaultPipeline();
         }
 
-        if ($stageId = request()->query('pipeline_stage_id')) {
+        if (request()->query('pipeline_stage_id')) {
             $stages = $pipeline->stages->where('id', request()->query('pipeline_stage_id'));
         } else {
             $stages = $pipeline->stages;
@@ -126,7 +126,7 @@ class LeadController extends Controller
                     'pipeline.stages',
                     'stage',
                     'attribute_values',
-                ])->paginate(10)),
+                ])->orderBy('updated_at', 'desc')->paginate(10)),
 
                 'meta' => [
                     'current_page' => $paginator->currentPage(),

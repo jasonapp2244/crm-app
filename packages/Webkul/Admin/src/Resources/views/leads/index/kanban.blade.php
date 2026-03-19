@@ -30,7 +30,7 @@
                 <div class="flex gap-2.5 overflow-x-auto">
                     <!-- Stage Cards -->
                     <div
-                        class="flex min-w-[275px] max-w-[275px] flex-col gap-1 rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900"
+                        class="flex min-w-[275px] max-w-[275px] flex-col gap-1 rounded-lg border border-gray-300 bg-white dark:border-gray-800 dark:bg-gray-900"
                         v-for="(stage, index) in stageLeads"
                     >
                         {!! view_render_event('admin.leads.index.kanban.content.stage.header.before') !!}
@@ -506,10 +506,10 @@
                  * Appends the leads to the stage.
                  *
                  * @param {object} params - The parameters to be appended.
-                 * @returns {void}
+                 * @returns {Promise}
                  */
                 append(params) {
-                    this.get(params)
+                    return this.get(params)
                         .then(response => {
                             for (let [sortOrder, data] of Object.entries(response.data)) {
                                 if (! this.stageLeads[sortOrder]) {
@@ -550,26 +550,32 @@
                     }
 
                     if (event.removed) {
-                        stage.lead_value = parseFloat(stage.lead_value) - parseFloat(event.removed.element.lead_value);
-
-                        this.stageLeads[stage.sort_order].leads.meta.total = this.stageLeads[stage.sort_order].leads.meta.total - 1;
-
                         return;
                     }
 
-                    stage.lead_value = parseFloat(stage.lead_value) + parseFloat(event.added.element.lead_value);
-
-                    this.stageLeads[stage.sort_order].leads.meta.total = this.stageLeads[stage.sort_order].leads.meta.total + 1;
-
-                    this.updateStage('{{ route('admin.leads.stage.update', '__LEAD_ID__') }}'.replace('__LEAD_ID__', event.added.element.id), {
+                    this.updateStage("{{ route('admin.leads.stage.update', '__LEAD_ID__') }}".replace('__LEAD_ID__', event.added.element.id), {
                         'lead_pipeline_stage_id': stage.id
                     })
                         .then(response => {
+                            this.get()
+                                .then(response => {
+                                    for (let [sortOrder, data] of Object.entries(response.data)) {
+                                        this.stageLeads[sortOrder] = data;
+                                    }
+                                });
+
                             this.$emitter.emit('add-flash', { type: 'success', message: response.data.message });
                         })
                         .catch(error => {
+                            this.get()
+                                .then(response => {
+                                    for (let [sortOrder, data] of Object.entries(response.data)) {
+                                        this.stageLeads[sortOrder] = data;
+                                    }
+                                });
+
                             this.$emitter.emit('add-flash', { type: 'error', message: error.response.data.message });
-                        });;
+                        });
                 },
 
                 /**
@@ -689,7 +695,7 @@
                  *
                  * @returns {void}
                  */
-                 updateKanbans() {
+                updateKanbans() {
                     let kanbans = this.getKanbans();
 
                     if (kanbans?.length) {
