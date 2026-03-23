@@ -55,7 +55,7 @@ class QuoteController extends Controller
     public function create(): View
     {
         $leadId = request('lead_id');
-        
+
         $lead = $leadId ? $this->leadRepository->find($leadId) : null;
 
         $quote = $this->quoteRepository->getModel();
