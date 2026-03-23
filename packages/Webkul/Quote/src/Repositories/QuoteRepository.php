@@ -82,6 +82,8 @@ class QuoteRepository extends Repository
     {
         $quote = $this->find($id);
 
+        $originalLeadId = $quote->lead_id;
+
         parent::update($data, $id);
 
         /**
@@ -118,21 +120,20 @@ class QuoteRepository extends Repository
                         'quote_id' => $id,
                     ]));
 
-                    $this->productRepository->updateOrCreate(
-                        [
-                            'lead_id' => $data['lead_id'],
-                            'product_id' => $itemData['product_id'],
-                        ],
-                        array_merge(
-                            request()->all(),
+                    if (! empty($data['lead_id'])) {
+                        $this->productRepository->updateOrCreate(
+                            [
+                                'lead_id' => $data['lead_id'],
+                                'product_id' => $itemData['product_id'],
+                            ],
                             [
                                 'lead_id' => $data['lead_id'],
                                 'amount' => $itemData['price'] * $itemData['quantity'],
                                 'quantity' => $itemData['quantity'],
                                 'price' => $itemData['price'],
-                            ],
-                        )
-                    );
+                            ]
+                        );
+                    }
                 } else {
                     if (is_numeric($index = $previousItemIds->search($itemId))) {
                         $previousItemIds->forget($index);
@@ -144,12 +145,12 @@ class QuoteRepository extends Repository
         }
 
         foreach ($previousItemIds as $itemId) {
-            if (! empty($data['lead_id'])) {
+            if (! empty($originalLeadId)) {
                 $deletedItem = $quote->items->firstWhere('id', $itemId);
 
                 if ($deletedItem?->product_id) {
                     $this->productRepository->deleteWhere([
-                        'lead_id'    => $data['lead_id'],
+                        'lead_id' => $originalLeadId,
                         'product_id' => $deletedItem->product_id,
                     ]);
                 }
