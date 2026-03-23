@@ -157,7 +157,7 @@ class LeadController extends Controller
     {
         Event::dispatch('lead.create.before');
 
-        $data = request()->all();
+        $data = $request->all();
 
         $data['status'] = 1;
 

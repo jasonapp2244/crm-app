@@ -5,7 +5,7 @@
         <x-admin::accordion class="select-none !border-none">
             <x-slot:header class="!p-0">
                 <div class="flex w-full items-center justify-between gap-4 font-semibold dark:text-white">
-                    <h4 >@lang('admin::app.leads.view.persons.title')</h4>
+                    <h4>@lang('admin::app.leads.view.persons.title')</h4>
 
                     @if (bouncer()->hasPermission('contacts.persons.edit'))
                         <a
