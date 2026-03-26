@@ -235,9 +235,9 @@
                         activeTab: 'lead-details',
 
                         tabs: [
-                            { id: 'lead-details', label: '@lang('admin::app.leads.create.details')' },
-                            { id: 'contact-person', label: '@lang('admin::app.leads.create.contact-person')' },
-                            { id: 'products', label: '@lang('admin::app.leads.create.products')' }
+                            { id: 'lead-details', label: "@lang('admin::app.leads.create.details')" },
+                            { id: 'contact-person', label: "@lang('admin::app.leads.create.contact-person')" },
+                            { id: 'products', label: "@lang('admin::app.leads.create.products')" }
                         ],
                     };
                 },

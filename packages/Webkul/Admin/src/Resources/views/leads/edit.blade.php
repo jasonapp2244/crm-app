@@ -233,9 +233,9 @@
                         products: @json($lead->products),
 
                         tabs: [
-                            { id: 'lead-details', label: '@lang('admin::app.leads.edit.details')' },
-                            { id: 'contact-person', label: '@lang('admin::app.leads.edit.contact-person')' },
-                            { id: 'products', label: '@lang('admin::app.leads.edit.products')' }
+                            { id: 'lead-details', label: "@lang('admin::app.leads.edit.details')" },
+                            { id: 'contact-person', label: "@lang('admin::app.leads.edit.contact-person')" },
+                            { id: 'products', label: "@lang('admin::app.leads.edit.products')" }
                         ],
                     };
                 },
