@@ -232,7 +232,9 @@
             },
 
             created() {
-                this.addProduct();
+                if(this.products.length <= 0) {
+                    this.addProduct();
+                }
             },
 
             computed: {

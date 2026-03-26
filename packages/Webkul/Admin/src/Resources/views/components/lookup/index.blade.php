@@ -184,8 +184,6 @@
                 if (this.value) {
                     this.selectedItem = this.value;
                 }
-
-                this.search(this.preload);
             },
 
             created() {
@@ -198,7 +196,7 @@
 
             watch: {
                 searchTerm(newVal, oldVal) {
-                    this.search(this.preload);
+                    this.search();
                 },
             },
 
@@ -225,6 +223,10 @@
                     this.showPopup = ! this.showPopup;
 
                     if (this.showPopup) {
+                        if (! this.searchTerm.trim()) {
+                            this.fetchResults('', 5);
+                        }
+
                         this.$nextTick(() => this.$refs.searchInput.focus());
                     }
                 },
@@ -247,22 +249,35 @@
                 },
 
                 /**
-                 * Initialize the items.
+                 * Triggered on keyup — loads defaults when empty, searches when typed.
                  *
                  * @return {void}
                  */
-                search(preload = false) {
-                    if (
-                        ! preload
-                        && this.searchTerm.length <= 2
-                    ) {
-                        this.searchedResults = [];
+                search() {
+                    if (! this.showPopup) {
+                        return;
+                    }
 
-                        this.isSearching = false;
+                    const query = this.searchTerm.trim();
+
+                    if (! query) {
+                        this.fetchResults('', 5);
 
                         return;
                     }
 
+                    this.fetchResults(query);
+                },
+
+                /**
+                 * Fetch results from the server.
+                 *
+                 * @param {String} query
+                 * @param {Number|null} limit
+                 *
+                 * @return {void}
+                 */
+                fetchResults(query = '', limit = null) {
                     this.isSearching = true;
 
                     if (this.cancelToken) {
@@ -271,22 +286,27 @@
 
                     this.cancelToken = this.$axios.CancelToken.source();
 
+                    const params = { ...this.params, query };
+
+                    if (limit) {
+                        params.limit = limit;
+                    }
+
                     this.$axios.get(this.src, {
-                            params: {
-                                ...this.params,
-                                query: this.searchTerm
-                            },
+                            params,
                             cancelToken: this.cancelToken.token,
                         })
                         .then(response => {
-                            this.searchedResults = response.data.data;
+                            const data = response.data?.data ?? response.data;
+                            const results = Array.isArray(data) ? data : [];
+                            this.searchedResults = limit ? results.slice(0, limit) : results;
                         })
                         .catch(error => {
                             if (! this.$axios.isCancel(error)) {
                                 console.error("Search request failed:", error);
                             }
 
-                            this.isSearching = false;
+                            this.searchedResults = [];
                         })
                         .finally(() => this.isSearching = false);
                 },

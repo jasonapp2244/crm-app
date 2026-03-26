@@ -215,28 +215,52 @@
                     this.showPopup = ! this.showPopup;
 
                     if (this.showPopup) {
+                        if (! this.searchTerm.trim()) {
+                            this.fetchLookupResults('', 5);
+                        }
+
                         this.$nextTick(() => this.$refs.searchInput.focus());
                     }
                 },
 
                 search() {
-                    if (this.searchTerm.length <= 2) {
-                        this.searchedResults = [];
+                    if (! this.showPopup) {
+                        return;
+                    }
 
-                        this.isSearching = false;
+                    const query = this.searchTerm.trim();
+
+                    if (! query) {
+                        this.fetchLookupResults('', 5);
 
                         return;
                     }
 
+                    this.fetchLookupResults(query);
+                },
+
+                fetchLookupResults(query = '', limit = null) {
                     this.isSearching = true;
 
-                    this.$axios.get(this.searchRoute, {
-                            params: { query: this.searchTerm }
+                    const params = { query };
+
+                    if (limit) {
+                        params.limit = limit;
+                    }
+
+                    this.$axios.get(this.searchRoute, { params })
+                        .then(response => {
+                            const data = Array.isArray(response.data)
+                                ? response.data
+                                : [];
+
+                            this.searchedResults = limit
+                                ? data.slice(0, limit)
+                                : data;
                         })
-                        .then (response => {
-                            this.searchedResults = response.data;
+                        .catch(error => {
+                            this.searchedResults = [];
                         })
-                        .catch (error => {})
                         .finally(() => this.isSearching = false);
                 },
 

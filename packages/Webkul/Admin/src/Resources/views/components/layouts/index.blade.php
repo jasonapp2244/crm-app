@@ -123,7 +123,7 @@
                 </div>
 
                 <!-- Powered By -->
-                <div class="fixed bottom-0 left-0 right-0 z-10">
+                <div class="fixed bottom-0 left-0 right-0 z-1">
                     <div class="border-t bg-white py-5 text-center text-sm font-normal dark:border-gray-800 dark:bg-gray-900 dark:text-white max-md:py-3">
                         <p>{!! core()->getConfigData('general.settings.footer.label') !!}</p>
                     </div>
