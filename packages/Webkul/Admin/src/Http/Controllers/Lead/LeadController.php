@@ -27,6 +27,8 @@ use Webkul\Lead\Repositories\SourceRepository;
 use Webkul\Lead\Repositories\StageRepository;
 use Webkul\Lead\Repositories\TypeRepository;
 use Webkul\Lead\Services\MagicAIService;
+use Webkul\Quote\Repositories\QuoteItemRepository;
+use Webkul\Quote\Repositories\QuoteRepository;
 use Webkul\Tag\Repositories\TagRepository;
 use Webkul\User\Repositories\UserRepository;
 
@@ -51,6 +53,8 @@ class LeadController extends Controller
         protected StageRepository $stageRepository,
         protected LeadRepository $leadRepository,
         protected ProductRepository $productRepository,
+        protected QuoteItemRepository $quoteItemRepository,
+        protected QuoteRepository $quoteRepository,
         protected PersonRepository $personRepository
     ) {
         request()->request->add(['entity_type' => 'leads']);
@@ -219,7 +223,7 @@ class LeadController extends Controller
     public function view(int $id)
     {
         $lead = $this->leadRepository->findOrFail($id);
-
+        
         $userIds = bouncer()->getAuthorizedUserIds();
 
         if (

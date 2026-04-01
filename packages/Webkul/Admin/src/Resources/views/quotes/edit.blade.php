@@ -573,9 +573,9 @@
                         activeTab: 'quote-info',
 
                         tabs: [
-                            { id: 'quote-info', label: '@lang('admin::app.quotes.create.quote-info')' },
-                            { id: 'address-info', label: '@lang('admin::app.quotes.create.address-info')' },
-                            { id: 'quote-items', label: '@lang('admin::app.quotes.create.quote-items')' }
+                            { id: 'quote-info', label: "@lang('admin::app.quotes.create.quote-info')" },
+                            { id: 'address-info', label: "@lang('admin::app.quotes.create.address-info')" },
+                            { id: 'quote-items', label: "@lang('admin::app.quotes.create.quote-items')" }
                         ],
 
                         leadEntity: @json($lookUpEntityData ?? []),

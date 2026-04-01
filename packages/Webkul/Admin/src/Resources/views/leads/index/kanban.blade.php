@@ -27,7 +27,7 @@
 
                 {!! view_render_event('admin.leads.index.kanban.content.before') !!}
 
-                <div class="flex gap-2.5 overflow-x-auto max-h-[calc(100vh-290px)]">
+                <div class="flex gap-2.5 overflow-x-auto max-h-[calc(100vh-300px)]">
                     <!-- Stage Cards -->
                     <div
                         class="flex min-w-[275px] max-w-[275px] flex-col gap-1 rounded-lg border border-gray-300 bg-white dark:border-gray-800 dark:bg-gray-900"

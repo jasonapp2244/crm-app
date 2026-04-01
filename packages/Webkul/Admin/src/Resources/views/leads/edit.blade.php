@@ -187,6 +187,31 @@
                     </div>
 
                     {!! view_render_event('admin.leads.edit.contact_person.after', ['lead' => $lead]) !!}
+
+                    {!! view_render_event('admin.leads.edit.contact_person.products.before', ['lead' => $lead]) !!}
+
+                    <!-- Product Section -->
+                    <div 
+                        class="flex flex-col gap-4" 
+                        id="products"
+                    >
+                        <div class="flex flex-col gap-1">
+                            <p class="text-base font-semibold dark:text-white">
+                                @lang('admin::app.leads.edit.products')
+                            </p>
+
+                            <p class="text-gray-600 dark:text-white">
+                                @lang('admin::app.leads.edit.products-info')
+                            </p>
+                        </div>
+
+                        <div>
+                            <!-- Product Component -->
+                            @include('admin::leads.common.products')
+                        </div>
+                    </div>
+
+                    {!! view_render_event('admin.leads.edit.contact_person.products.after', ['lead' => $lead]) !!}
                 </div>
                 
                 {!! view_render_event('admin.leads.form_controls.after') !!}
@@ -207,7 +232,8 @@
 
                         tabs: [
                             { id: 'lead-details', label: "@lang('admin::app.leads.edit.details')" },
-                            { id: 'contact-person', label: "@lang('admin::app.leads.edit.contact-person')" }
+                            { id: 'contact-person', label: "@lang('admin::app.leads.edit.contact-person')" },
+                            { id: 'products', label: "@lang('admin::app.leads.edit.products')" }
                         ],
                     };
                 },

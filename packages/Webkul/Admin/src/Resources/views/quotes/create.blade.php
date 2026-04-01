@@ -580,9 +580,9 @@
                         activeTab: 'quote-info',
 
                         tabs: [
-                            { id: 'quote-info', label: '@lang('admin::app.quotes.create.quote-info')' },
-                            { id: 'address-info', label: '@lang('admin::app.quotes.create.address-info')' },
-                            { id: 'quote-items', label: '@lang('admin::app.quotes.create.quote-items')' }
+                            { id: 'quote-info', label: "@lang('admin::app.quotes.create.quote-info')" },
+                            { id: 'address-info', label: "@lang('admin::app.quotes.create.address-info')" },
+                            { id: 'quote-items', label: "@lang('admin::app.quotes.create.quote-items')" }
                         ],
 
                         leadEntity: @json($lookUpEntityData ?? []),
@@ -621,6 +621,12 @@
                         adjustmentAmount: '0.0000',
 
                         products: @json($leadProducts ?? []),
+                    }
+                },
+
+                created() {
+                    if(this.products.length <= 0) {
+                        this.addProduct();
                     }
                 },
 
@@ -784,7 +790,7 @@
                             id: null,
                             product_id: null,
                             name: '',
-                            quantity: 1,
+                            quantity: 0,
                             total: '0.0000',
                             price: '0.0000',
                             discount_amount: '0.0000',
