@@ -408,10 +408,10 @@
                         ></i>
 
                         <div class="w-1/5">
-                            <x-admin::dropdown class="rounded-lg group-hover:visible dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400">
+                            <x-admin::dropdown class="rounded-lg dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400">
                                 <x-slot:toggle>
                                     <span
-                                        class="invisible cursor-pointer py-2 text-xs text-brandColor hover:text-brandColor hover:underline group-hover:visible"
+                                        class="cursor-pointer py-2 text-xs text-brandColor hover:text-brandColor hover:underline"
                                     >
                                         @lang('admin::app.settings.webhooks.edit.insert-placeholder')
                                     </span>
