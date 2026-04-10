@@ -1880,6 +1880,7 @@ return [
                 'title' => 'Sobre el Lead',
             ],
             'quotes' => [
+                'id' => 'ID',
                 'subject' => 'Asunto',
                 'expired-at' => 'Expirado En',
                 'sub-total' => 'Subtotal',
@@ -1894,6 +1895,12 @@ return [
                 'empty-title' => 'No se Encontraron Cotizaciones',
                 'empty-info' => 'No se Encontraron Cotizaciones para este Lead',
                 'add-btn' => 'Agregar Cotización',
+                'mail' => 'Correo',
+                'quote-not-found' => 'No se encontró la cotización para este lead.',
+                'person-email-unavailable' => 'El correo de la persona del lead no está disponible.',
+                'mail-subject' => 'Cotización: :subject',
+                'mail-body' => 'Por favor, encuentre adjunto el PDF de la cotización. Correo generado por el sistema.',
+                'mail-send-failed' => 'No se pudo enviar el correo de la cotización.',
             ],
             'products' => [
                 'product-name' => 'Nombre del Producto',

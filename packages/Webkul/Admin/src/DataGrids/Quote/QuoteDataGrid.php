@@ -35,6 +35,7 @@ class QuoteDataGrid extends DataGrid
                 'quotes.expired_at as expired_quotes'
             )
             ->leftJoin('users', 'quotes.user_id', '=', 'users.id')
+            
             ->leftJoin('persons', 'quotes.person_id', '=', 'persons.id');
 
         if ($userIds = bouncer()->getAuthorizedUserIds()) {
@@ -198,6 +199,16 @@ class QuoteDataGrid extends DataGrid
                 'title' => trans('admin::app.quotes.index.datagrid.print'),
                 'method' => 'GET',
                 'url' => fn ($row) => route('admin.quotes.print', $row->id),
+            ]);
+        }
+
+        if (bouncer()->hasPermission('quotes.mail')) {
+            $this->addAction([
+                'index' => 'mail',
+                'icon' => 'icon-mail',
+                'title' => trans('admin::app.quotes.index.datagrid.mail'),
+                'method' => 'POST',
+                'url' => fn ($row) => route('admin.leads.quotes.mail', ['quote_id' => $row->id]),
             ]);
         }
 

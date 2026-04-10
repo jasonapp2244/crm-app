@@ -1880,6 +1880,7 @@ return [
                 'title' => 'Về Khách Hàng Tiềm Năng',
             ],
             'quotes' => [
+                'id' => 'ID',
                 'subject' => 'Chủ Đề',
                 'expired-at' => 'Hết Hạn Vào',
                 'sub-total' => 'Tạm Tính',
@@ -1894,6 +1895,12 @@ return [
                 'empty-title' => 'Không Có Báo Giá',
                 'empty-info' => 'Không Có Báo Giá Cho Khách Hàng Tiềm Năng Này',
                 'add-btn' => 'Thêm Báo Giá',
+                'mail' => 'Gửi Email',
+                'quote-not-found' => 'Không tìm thấy báo giá cho khách hàng tiềm năng này.',
+                'person-email-unavailable' => 'Email của người liên hệ trong khách hàng tiềm năng không khả dụng.',
+                'mail-subject' => 'Báo giá: :subject',
+                'mail-body' => 'Vui lòng xem tệp PDF báo giá được đính kèm.',
+                'mail-send-failed' => 'Không thể gửi email báo giá.',
             ],
             'products' => [
                 'product-name' => 'Tên Sản Phẩm',

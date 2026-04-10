@@ -124,7 +124,7 @@
                                 {!! view_render_event('admin.leads.index.kanban.content.stage.body.card.before') !!}
 
                                 <a
-                                    class="lead-item flex cursor-pointer flex-col gap-5 rounded-sm border border-gray-200 bg-gray-100 p-2 dark:border-gray-400 dark:bg-gray-400"
+                                    class="lead-item flex cursor-pointer flex-col gap-5 rounded-lg border border-gray-300 shadow-xl shadow-slate-200 bg-gray-100 p-2 dark:border-gray-400 dark:bg-gray-400"
                                     :href="'{{ route('admin.leads.view', 'replaceId') }}'.replace('replaceId', element.id)"
                                 >
                                     {!! view_render_event('admin.leads.index.kanban.content.stage.body.card.header.before') !!}
@@ -229,7 +229,7 @@
                 v-slot="{ meta, errors, handleSubmit }"
                 as="div"
                 ref="stageUpdateForm"
-            >
+                >
                 <form @submit="handleSubmit($event, handleFormSubmit)">
                     <!-- Modal -->
                     <x-admin::modal

@@ -47,7 +47,7 @@
                         v-for="type in types"
                         class="cursor-pointer px-3 py-2.5 text-sm font-medium dark:text-white"
                         :class="{'border-brandColor border-b-2 !text-brandColor transition': selectedType == type.name }"
-                        @click="selectedType = type.name"
+                        @click="onTabChange(type.name)"
                     >
                         @{{ type.label }}
                     </div>
@@ -545,6 +545,15 @@
             },
 
             methods: {
+                onTabChange(tabName) {
+                    this.selectedType = tabName;
+
+                    // Update URL query parameter to persist tab selection
+                    const url = new window['URL'](window.location);
+                    url.searchParams.set('tab', tabName);
+                    window.history.replaceState({}, '', url.toString());
+                },
+
                 get() {
                     this.isLoading = true;
 

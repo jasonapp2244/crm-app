@@ -156,6 +156,7 @@
                                 value="1"
                                 :label="trans('admin::app.settings.webforms.edit.create-lead')"
                                 :checked="(bool) $webForm->create_lead"
+                                @change="onCreateLeadChange"
                             />
 
                         </x-admin::form.control-group>
@@ -698,6 +699,16 @@
                 },
 
                 methods: {
+                    /**
+                     * Update createLead value from create_lead switch.
+                     *
+                     * @param {Event} event
+                     * @return {void}
+                     */
+                    onCreateLeadChange(event) {
+                        this.createLead = event.target.checked;
+                    },
+
                     /**
                      * Copy the value to the clipboard.
                      *
