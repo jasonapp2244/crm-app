@@ -99,13 +99,13 @@
                                 @lang('admin::app.settings.webforms.edit.submit-success-action')
                             </x-admin::form.control-group.label>
 
-                            <div class="flex">
+                            <div class="flex flex-col gap-2 sm:flex-row sm:items-start">
                                 <x-admin::form.control-group.control
                                     type="select"
                                     name="submit_success_action"
                                     id="submit_success_action"
                                     value="message"
-                                    class="!w-1/4 rounded-r-none"
+                                    class="w-full sm:w-auto sm:min-w-[12rem] sm:rounded-r-none"
                                     :label="trans('admin::app.settings.webforms.edit.submit-success-action')"
                                     v-model="submitSuccessAction.value"
                                 >
@@ -125,7 +125,7 @@
                                     name="submit_success_content"
                                     id="submit_success_content"
                                     :value="old('submit_success_content') ?? $webForm->submit_success_content"
-                                    class="rounded-l-none"
+                                    class="w-full sm:flex-1 sm:rounded-l-none"
                                     rules="required"
                                     label="Submit Success Content"
                                     ::placeholder="placeholder"
