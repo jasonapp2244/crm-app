@@ -223,7 +223,7 @@ class LeadController extends Controller
     public function view(int $id)
     {
         $lead = $this->leadRepository->findOrFail($id);
-        
+
         $userIds = bouncer()->getAuthorizedUserIds();
 
         if (

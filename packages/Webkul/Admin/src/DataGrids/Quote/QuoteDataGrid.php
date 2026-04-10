@@ -35,7 +35,6 @@ class QuoteDataGrid extends DataGrid
                 'quotes.expired_at as expired_quotes'
             )
             ->leftJoin('users', 'quotes.user_id', '=', 'users.id')
-            
             ->leftJoin('persons', 'quotes.person_id', '=', 'persons.id');
 
         if ($userIds = bouncer()->getAuthorizedUserIds()) {

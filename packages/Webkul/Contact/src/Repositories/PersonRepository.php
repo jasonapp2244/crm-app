@@ -172,7 +172,7 @@ class PersonRepository extends Repository
         ]);
 
         $data['unique_id'] = implode('|', $uniqueIdParts);
-        
+
         if (isset($data['contact_numbers'])) {
             $data['contact_numbers'] = collect($data['contact_numbers'])->filter(fn ($number) => ! is_null($number['value']))->toArray();
 
