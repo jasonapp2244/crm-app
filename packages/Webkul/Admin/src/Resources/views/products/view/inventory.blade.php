@@ -105,10 +105,9 @@
                 {!! view_render_event('admin.products.view.inventory.source.before', ['product' => $product]) !!}
 
                 <!-- Add Source dropdown -->
-                <div v-if="notAddedWarehouses.length">
+                <div v-if="notAddedWarehouses.length" class="relative">
                     <x-admin::dropdown
                         position="bottom-right"
-                        class="!static"
                     >
                         <x-slot:toggle>
                             <button
@@ -119,9 +118,8 @@
 
                                 @lang('admin::app.products.view.inventory.add-source')
                             </button>
-                        </x-slot>
-
-                        <x-slot:menu class="!top-[30px] max-h-[200px] overflow-auto">
+                        </x-slot:toggle>
+                        <x-slot:menu class="max-h-[200px] overflow-auto">
                             {!! view_render_event('admin.products.view.inventory.source.menu.item.before', ['product' => $product]) !!}
 
                             <x-admin::dropdown.menu.item
