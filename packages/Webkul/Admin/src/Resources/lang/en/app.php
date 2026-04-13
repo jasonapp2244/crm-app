@@ -460,6 +460,7 @@ return [
                 'billing-address' => 'Billing Address',
                 'date' => 'Date',
                 'discount' => 'Discount',
+                'description' => 'Description',
                 'expired-at' => 'Expired At',
                 'grand-total' => 'Grand Total',
                 'person' => 'Person',

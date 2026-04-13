@@ -411,6 +411,7 @@ return [
                 'billing-address' => 'آدرس صورتحساب',
                 'date' => 'تاریخ',
                 'discount' => 'تخفیف',
+                'description' => 'توضیحات',
                 'expired-at' => 'تاریخ انقضا',
                 'grand-total' => 'جمع کل',
                 'person' => 'شخص',

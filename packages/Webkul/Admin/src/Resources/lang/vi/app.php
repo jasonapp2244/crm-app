@@ -411,6 +411,7 @@ return [
                 'billing-address' => 'Địa chỉ thanh toán',
                 'date' => 'Ngày',
                 'discount' => 'Giảm giá',
+                'description' => 'Mô tả',
                 'expired-at' => 'Hết hạn vào',
                 'grand-total' => 'Tổng cộng',
                 'person' => 'Người',

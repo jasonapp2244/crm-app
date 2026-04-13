@@ -411,6 +411,7 @@ return [
                 'billing-address' => 'Fatura Adresi',
                 'date' => 'Tarih',
                 'discount' => 'İndirim',
+                'description' => 'Açıklama',
                 'expired-at' => 'Son Kullanma Tarihi',
                 'grand-total' => 'Genel Toplam',
                 'person' => 'Kişi',
