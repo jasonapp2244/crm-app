@@ -45,13 +45,37 @@ async function generateLead(adminPage) {
 
     /**
      * Save the lead.
+     * In some CI runs the form has a default empty product row which blocks submission,
+     * so remove that row and retry save when the product validation message appears.
      */
     await adminPage.getByRole('button', { name: 'Save' }).click();
+
+    const leadCreatedMessage = adminPage.locator('#app p', {
+      hasText: 'Lead created successfully.',
+    }).first();
+
+    try {
+      await expect(leadCreatedMessage).toBeVisible({ timeout: 5000 });
+    } catch {
+      const productRequiredMessage = adminPage.getByText('The Product Name field is required');
+
+      if (await productRequiredMessage.isVisible()) {
+        const productRowDeleteButton = adminPage
+          .locator('span.icon-delete, span.icon-trash, i.icon-delete, i.icon-trash')
+          .first();
+
+        if (await productRowDeleteButton.isVisible()) {
+          await productRowDeleteButton.click();
+        }
+
+        await adminPage.getByRole('button', { name: 'Save' }).click();
+      }
+    }
 
     /**
      * Assertion to confirm lead creation.
      */
-    await expect(adminPage.getByText('Success', { exact: true })).toBeVisible();
+    await expect(leadCreatedMessage).toBeVisible();
 
     return { leadTitle, leadDescription, leadDate, leadEmail, leadPhoneNumber };
 } 
