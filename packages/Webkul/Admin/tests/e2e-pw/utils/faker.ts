@@ -367,7 +367,8 @@ function generateProductName() {
     return (
         adjectives[Math.floor(Math.random() * adjectives.length)] +
         ' ' +
-        items[Math.floor(Math.random() * items.length)]
+        items[Math.floor(Math.random() * items.length)] +
+        '-' + Date.now()
     );
 }
 

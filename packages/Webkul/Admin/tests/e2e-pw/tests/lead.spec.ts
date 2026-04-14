@@ -16,8 +16,16 @@ async function selectProductInRow(page, productName: string) {
     await searchInput.waitFor({ state: 'visible' });
     await searchInput.fill(productName);
 
+    // The lookup uses v-model.lazy (updates on change, not input) combined
+    // with v-debounce="500" (dispatches change 500ms after the last input).
+    // Playwright's fill() fires input but not change, so searchTerm won't
+    // update for 500ms. Dispatch change explicitly to trigger it immediately.
+    await searchInput.dispatchEvent('change');
+
     // Wait for the matching result and select it.
-    await productSection.locator('ul li').filter({ hasText: productName }).first().click();
+    const resultItem = productSection.locator('ul li').filter({ hasText: productName }).first();
+    await resultItem.waitFor({ state: 'visible', timeout: 10000 });
+    await resultItem.click();
 }
 
 async function generateLead(adminPage) {
