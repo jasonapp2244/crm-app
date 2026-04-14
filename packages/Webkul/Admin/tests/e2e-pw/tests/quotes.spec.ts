@@ -45,6 +45,7 @@ test.describe("quotes management", () => {
         await adminPage
             .getByRole("listitem")
             .filter({ hasText: Person.Name })
+            .first()
             .click();
 
         /**

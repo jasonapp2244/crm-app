@@ -31,7 +31,10 @@ test.describe("organization management", () => {
     });
 
     test('should be able to delete organization', async ({ adminPage }) => {
-        await adminPage.goto('admin/contacts/organizations');
+        /**
+         * Create Organization first.
+         */
+        await createOrganization(adminPage);
 
         /**
          * Delete Organization.
@@ -86,7 +89,7 @@ test.describe("organization management", () => {
         /**
          * Fill in organization details
          */
-        await adminPage.getByRole('textbox', { name: 'Name *' }).fill(companyName);
+        await adminPage.locator('input[name="name"]').fill(companyName);
         await adminPage.locator('textarea[name="address\\[address\\]"]').fill('ARV Park');
         await adminPage.getByRole('combobox').selectOption('IN');
         await adminPage.locator('select[name="address\\[state\\]"]').selectOption('DL');
@@ -97,8 +100,8 @@ test.describe("organization management", () => {
          * Click to add extra details
          */
         await adminPage.locator('div').filter({ hasText: /^Click to add$/ }).nth(2).click();
-        await adminPage.getByRole('textbox', { name: 'Search...' }).fill('exampl');
-        await adminPage.getByRole('listitem').filter({ hasText: 'Example' }).click();
+        await adminPage.getByRole('textbox', { name: 'Search...' }).fill('admin');
+        await adminPage.getByRole('listitem').filter({ hasText: /admin/i }).first().click();
 
         /** 
          * Click on "Save Organization"

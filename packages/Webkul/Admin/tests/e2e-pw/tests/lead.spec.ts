@@ -1,23 +1,31 @@
 import { test, expect } from "../setup";
 import fs from "fs";
-import { generateName, getRandomDateTime, generateDescription, generateDate, generateEmail, generatePhoneNumber,generateEmailSubject } from '../utils/faker';
+import { generateName, getRandomDateTime, generateDescription, generateDate, generateEmail, generatePhoneNumber, generateEmailSubject, createProduct } from '../utils/faker';
 
-async function clearProductsIfPresent(page) {
-  // Wait for Vue to render any auto-added product rows before cleanup.
-  await page.locator('#products i.icon-delete').first().waitFor({ state: 'visible', timeout: 3000 }).catch(() => {});
+/**
+ * Select an existing product in the auto-added product row via the lookup component.
+ */
+async function selectProductInRow(page, productName: string) {
+    const productSection = page.locator('#products');
 
-  const deleteIcons = page.locator('#products i.icon-delete');
+    // Click the product lookup trigger to open the dropdown.
+    await productSection.locator('.relative.inline-block').first().click();
 
-  for (let i = 0; i < 10; i++) {
-    const count = await deleteIcons.count();
+    // Type the product name in the search input inside the popup.
+    const searchInput = productSection.locator('input[type="text"][placeholder]').first();
+    await searchInput.waitFor({ state: 'visible' });
+    await searchInput.fill(productName);
 
-    if (!count) break;
-
-    await deleteIcons.first().click();
-  }
+    // Wait for the matching result and select it.
+    await productSection.locator('ul li').filter({ hasText: productName }).first().click();
 }
 
 async function generateLead(adminPage) {
+    /**
+     * Create a product first (CI may have no seeded products).
+     */
+    const { name: productName } = await createProduct(adminPage);
+
     /**
      * Go to the lead listing page.
      */
@@ -59,9 +67,9 @@ async function generateLead(adminPage) {
     await adminPage.getByText('Add as New').click();
 
     /**
-     * Save the lead.
+     * Select the product in the auto-added product row.
      */
-    await clearProductsIfPresent(adminPage);
+    await selectProductInRow(adminPage, productName);
 
     await adminPage.getByRole('button', { name: 'Save' }).click();
 
@@ -119,7 +127,13 @@ test.describe("lead management", () => {
        await page1.fill('input[name="title"]', generateName());
        await page1.getByLabel('Source').selectOption('3');
        await page1.fill('input[name="lead_value"]', '30000');
-       await clearProductsIfPresent(page1);
+
+       // Remove auto-added empty product rows on the edit page
+       // (the edit page's v-product-list always adds an empty row).
+       while (await page1.locator('#products .icon-delete').count() > 0) {
+           await page1.locator('#products .icon-delete').first().click();
+       }
+
        await page1.getByRole('button', { name: 'Save' }).click();
 
        /**
