@@ -2,6 +2,21 @@ import { test, expect } from "../setup";
 import fs from "fs";
 import { generateName, getRandomDateTime, generateDescription, generateDate, generateEmail, generatePhoneNumber,generateEmailSubject } from '../utils/faker';
 
+async function clearProductsIfPresent(page) {
+  const deleteIcons = page.locator('#products i.icon-delete');
+
+  // Leads create/edit screens may auto-add an empty product row; remove it to avoid required-field validation.
+  for (let i = 0; i < 10; i++) {
+    const count = await deleteIcons.count();
+
+    if (!count) {
+      break;
+    }
+
+    await deleteIcons.first().click();
+  }
+}
+
 async function generateLead(adminPage) {
     /**
      * Go to the lead listing page.
@@ -45,9 +60,9 @@ async function generateLead(adminPage) {
 
     /**
      * Save the lead.
-     * In some CI runs the form has a default empty product row which blocks submission,
-     * so remove that row and retry save when the product validation message appears.
      */
+    await clearProductsIfPresent(adminPage);
+
     await adminPage.getByRole('button', { name: 'Save' }).click();
 
     const leadCreatedMessage = adminPage.locator('#app p', {
@@ -58,16 +73,12 @@ async function generateLead(adminPage) {
       await expect(leadCreatedMessage).toBeVisible({ timeout: 5000 });
     } catch {
       const productRequiredMessage = adminPage.getByText('The Product Name field is required');
+      const hasProductValidationError = await productRequiredMessage
+        .isVisible()
+        .catch(() => false);
 
-      if (await productRequiredMessage.isVisible()) {
-        const productRowDeleteButton = adminPage
-          .locator('span.icon-delete, span.icon-trash, i.icon-delete, i.icon-trash')
-          .first();
-
-        if (await productRowDeleteButton.isVisible()) {
-          await productRowDeleteButton.click();
-        }
-
+      if (hasProductValidationError) {
+        await clearProductsIfPresent(adminPage);
         await adminPage.getByRole('button', { name: 'Save' }).click();
       }
     }
@@ -126,8 +137,20 @@ test.describe("lead management", () => {
        await page1.fill('input[name="title"]', generateName());
        await page1.getByLabel('Source').selectOption('3');
        await page1.fill('input[name="lead_value"]', '30000');
+         await clearProductsIfPresent(page1);
        await page1.getByRole('button', { name: 'Save' }).click();
-       await page1.getByText('Success', { exact: true }).click();
+
+         const productRequiredMessage = page1.getByText('The Product Name field is required');
+         const hasProductValidationError = await productRequiredMessage
+           .isVisible()
+           .catch(() => false);
+
+         if (hasProductValidationError) {
+           await clearProductsIfPresent(page1);
+           await page1.getByRole('button', { name: 'Save' }).click();
+         }
+
+       await expect(page1.locator('#app')).toContainText('Leads updated successfully.');
     });
 
     test("should able to delete lead", async ({ adminPage }) => {
