@@ -3,15 +3,15 @@ import fs from "fs";
 import { generateName, getRandomDateTime, generateDescription, generateDate, generateEmail, generatePhoneNumber,generateEmailSubject } from '../utils/faker';
 
 async function clearProductsIfPresent(page) {
+  // Wait for Vue to render any auto-added product rows before cleanup.
+  await page.locator('#products i.icon-delete').first().waitFor({ state: 'visible', timeout: 3000 }).catch(() => {});
+
   const deleteIcons = page.locator('#products i.icon-delete');
 
-  // Leads create/edit screens may auto-add an empty product row; remove it to avoid required-field validation.
   for (let i = 0; i < 10; i++) {
     const count = await deleteIcons.count();
 
-    if (!count) {
-      break;
-    }
+    if (!count) break;
 
     await deleteIcons.first().click();
   }
@@ -65,28 +65,10 @@ async function generateLead(adminPage) {
 
     await adminPage.getByRole('button', { name: 'Save' }).click();
 
-    const leadCreatedMessage = adminPage.locator('#app p', {
-      hasText: 'Lead created successfully.',
-    }).first();
-
-    try {
-      await expect(leadCreatedMessage).toBeVisible({ timeout: 5000 });
-    } catch {
-      const productRequiredMessage = adminPage.getByText('The Product Name field is required');
-      const hasProductValidationError = await productRequiredMessage
-        .isVisible()
-        .catch(() => false);
-
-      if (hasProductValidationError) {
-        await clearProductsIfPresent(adminPage);
-        await adminPage.getByRole('button', { name: 'Save' }).click();
-      }
-    }
-
     /**
-     * Assertion to confirm lead creation.
+     * Successful creation redirects to the leads index page.
      */
-    await expect(leadCreatedMessage).toBeVisible();
+    await adminPage.waitForURL(/\/admin\/leads(?:\?.*)?$/);
 
     return { leadTitle, leadDescription, leadDate, leadEmail, leadPhoneNumber };
 } 
@@ -137,20 +119,13 @@ test.describe("lead management", () => {
        await page1.fill('input[name="title"]', generateName());
        await page1.getByLabel('Source').selectOption('3');
        await page1.fill('input[name="lead_value"]', '30000');
-         await clearProductsIfPresent(page1);
+       await clearProductsIfPresent(page1);
        await page1.getByRole('button', { name: 'Save' }).click();
 
-         const productRequiredMessage = page1.getByText('The Product Name field is required');
-         const hasProductValidationError = await productRequiredMessage
-           .isVisible()
-           .catch(() => false);
-
-         if (hasProductValidationError) {
-           await clearProductsIfPresent(page1);
-           await page1.getByRole('button', { name: 'Save' }).click();
-         }
-
-       await expect(page1.locator('#app')).toContainText('Leads updated successfully.');
+       /**
+        * Successful update redirects to the leads index page.
+        */
+       await page1.waitForURL(/\/admin\/leads(?:\?.*)?$/);
     });
 
     test("should able to delete lead", async ({ adminPage }) => {
