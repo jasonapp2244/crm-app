@@ -1,5 +1,5 @@
 import { test, expect } from '../../setup';
-import {generateCompanyName, createOrganization} from "../../utils/faker"
+import {createOrganization} from "../../utils/faker"
 
 test.describe("organization management", () => {
     test('should be able to create organization', async ({ adminPage }) => {
@@ -77,7 +77,6 @@ test.describe("organization management", () => {
             await expect(adminPage.locator('#app')).toContainText('Success');
         }
     });
-
 
     test('should not be able to create same name organization', async ({ adminPage }) => {
         /**
