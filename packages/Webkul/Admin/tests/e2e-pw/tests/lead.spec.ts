@@ -27,21 +27,41 @@ async function generateLead(adminPage) {
     await adminPage.fill('input[name="lead_value"]', '1000');
 
     /**
-     * Add a new person.
+     * Add a new person via the lookup component.
+     * The person lookup uses v-model.lazy + v-debounce="500" on its search input.
+     * Playwright's fill() doesn't fire 'change', so we dispatch it manually
+     * and wait for the debounce timer to update searchTerm.
      */
-    await adminPage.locator('div').filter({ hasText: /^Click to Add$/ }).nth(1).click();
-    await adminPage.getByRole('textbox', { name: 'Search...' }).fill(leadTitle);
-    await adminPage.getByText('Add as New').click();
+    const contactSection = adminPage.locator('#contact-person');
+
+    await contactSection.getByText('Click to Add', { exact: true }).first().click();
+
+    const personSearch = contactSection.locator('.absolute input[type="text"]').first();
+    await personSearch.waitFor({ state: 'visible' });
+    await personSearch.fill(leadTitle);
+    await personSearch.dispatchEvent('change');
+    await adminPage.waitForTimeout(600);
+
+    await contactSection.getByText('Add as New').first().click();
 
     await adminPage.fill('input[name="person[emails][0][value]"]', leadEmail);
     await adminPage.fill('input[name="person[contact_numbers][0][value]"]', leadPhoneNumber);
 
     /**
-     * Associate an organization.
+     * Associate an organization via the lookup component.
+     * Same v-model.lazy + v-debounce issue. Additionally, the org lookup's
+     * "Add as New" only appears when searchTerm.length > 2 and no results found.
      */
-    await adminPage.locator('div').filter({ hasText: /^Click to add$/ }).nth(2).click();
-    await adminPage.getByRole('textbox', { name: 'Search...' }).fill(leadTitle);
-    await adminPage.getByText('Add as New').click();
+    await contactSection.getByText('Click to add', { exact: true }).first().click();
+
+    const orgSearch = contactSection.locator('.absolute input[type="text"]').first();
+    await orgSearch.waitFor({ state: 'visible' });
+    await orgSearch.fill(leadTitle);
+    await orgSearch.dispatchEvent('change');
+
+    const orgAddNew = contactSection.getByText('Add as New').first();
+    await orgAddNew.waitFor({ state: 'visible' });
+    await orgAddNew.click();
 
     /**
      * Remove the auto-added empty product row to avoid validation errors.
