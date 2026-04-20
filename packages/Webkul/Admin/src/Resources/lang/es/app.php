@@ -411,6 +411,7 @@ return [
                 'billing-address' => 'Dirección de Facturación',
                 'date' => 'Fecha',
                 'discount' => 'Descuento',
+                'description' => 'Descripción',
                 'expired-at' => 'Vence en',
                 'grand-total' => 'Total General',
                 'person' => 'Persona',

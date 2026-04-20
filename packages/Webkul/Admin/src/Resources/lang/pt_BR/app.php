@@ -411,6 +411,7 @@ return [
                 'billing-address' => 'Endereço de Cobrança',
                 'date' => 'Data',
                 'discount' => 'Desconto',
+                'description' => 'Descrição',
                 'expired-at' => 'Expirado em',
                 'grand-total' => 'Total Geral',
                 'person' => 'Pessoa',

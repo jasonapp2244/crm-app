@@ -411,6 +411,7 @@ return [
                 'billing-address' => 'عنوان الفوترة',
                 'date' => 'التاريخ',
                 'discount' => 'الخصم',
+                'description' => 'الوصف',
                 'expired-at' => 'تاريخ الانتهاء',
                 'grand-total' => 'المجموع الكلي',
                 'person' => 'Person',
