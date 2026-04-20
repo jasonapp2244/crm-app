@@ -20,7 +20,7 @@
                         <x-admin::table.thead>
                             <x-admin::table.thead.tr>
                                 <x-admin::table.th>
-                                    @lang('admin::app.products.view.inventory.source')
+                                    @lang('admin::app.products.view.inventory.warehouse')
                                 </x-admin::table.th>
 
                                 <x-admin::table.th >
@@ -117,7 +117,7 @@
                             >
                                 <i class="icon-add text-md !text-brandColor"></i>
 
-                                @lang('admin::app.products.view.inventory.add-source')
+                                @lang('admin::app.products.view.inventory.add-warehouse')
                             </button>
                         </x-slot>
 
