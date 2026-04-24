@@ -45,21 +45,6 @@
         rel="stylesheet"
     />
 
-    @if ($favicon = core()->getConfigData('general.design.admin_logo.favicon'))
-        <link
-            type="image/x-icon"
-            href="{{ Storage::url($favicon) }}"
-            rel="shortcut icon"
-            sizes="16x16"
-        >
-    @else
-        <link
-            type="image/x-icon"
-            href="{{ vite()->asset('images/favicon.ico') }}"
-            rel="shortcut icon"
-            sizes="16x16"
-        />
-    @endif
 
     @stack('styles')
 

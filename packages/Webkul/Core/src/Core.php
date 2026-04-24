@@ -11,7 +11,7 @@ use Webkul\Core\Repositories\CountryStateRepository;
 class Core
 {
     /**
-     * The Krayin version.
+     * The CRM version.
      *
      * @var string
      */
@@ -29,7 +29,7 @@ class Core
     ) {}
 
     /**
-     * Get the version number of the Krayin.
+     * Get the version number of the CRM.
      *
      * @return string
      */

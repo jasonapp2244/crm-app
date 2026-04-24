@@ -82,13 +82,42 @@ return [
     ],
 
     /**
+     * SMS & WhatsApp.
+     */
+    [
+        'key' => 'sms',
+        'name' => 'admin::app.layouts.sms',
+        'route' => 'admin.sms.index',
+        'sort' => 5,
+        'icon-class' => 'icon-call',
+    ], [
+        'key' => 'sms.messages',
+        'name' => 'admin::app.layouts.sms-messages',
+        'route' => 'admin.sms.index',
+        'sort' => 1,
+        'icon-class' => '',
+    ], [
+        'key' => 'sms.numbers',
+        'name' => 'admin::app.layouts.sms-numbers',
+        'route' => 'admin.sms.numbers.index',
+        'sort' => 2,
+        'icon-class' => '',
+    ], [
+        'key' => 'sms.templates',
+        'name' => 'admin::app.layouts.sms-templates',
+        'route' => 'admin.sms.templates.index',
+        'sort' => 3,
+        'icon-class' => '',
+    ],
+
+    /**
      * Activities.
      */
     [
         'key' => 'activities',
         'name' => 'admin::app.layouts.activities',
         'route' => 'admin.activities.index',
-        'sort' => 5,
+        'sort' => 6,
         'icon-class' => 'icon-activity',
     ],
 

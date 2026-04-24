@@ -46,6 +46,11 @@ require 'quote-routes.php';
 require 'configuration-routes.php';
 
 /**
+ * SMS routes.
+ */
+require 'sms-routes.php';
+
+/**
  * Rest routes.
  */
 require 'rest-routes.php';

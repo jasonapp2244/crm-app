@@ -30,7 +30,7 @@ class Vite
     }
 
     /**
-     * Set krayin vite.
+     * Set crm vite.
      *
      * @return mixed
      */

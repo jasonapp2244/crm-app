@@ -73,6 +73,9 @@
 
             <!-- Revenue by Types -->
             @include('admin::dashboard.index.revenue-by-types')
+
+            <!-- SMS/WhatsApp Stats -->
+            @include('admin::dashboard.index.sms-stats')
         </div>
 
         {!! view_render_event('admin.dashboard.index.content.left.after') !!}

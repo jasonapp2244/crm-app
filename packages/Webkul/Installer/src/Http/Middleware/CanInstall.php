@@ -48,7 +48,7 @@ class CanInstall
 
         touch($installedPath);
 
-        Event::dispatch('krayin.installed');
+        Event::dispatch('crm.installed');
 
         return true;
     }

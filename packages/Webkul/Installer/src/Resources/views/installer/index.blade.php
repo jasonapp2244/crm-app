@@ -27,12 +27,6 @@
             rel="stylesheet"
         />
 
-        <link
-            type="image/x-icon"
-            href="{{ vite()->asset('images/favicon.ico', 'installer') }}"
-            rel="shortcut icon"
-            sizes="16x16"
-        />
 
         @stack('styles')
     </head>
@@ -129,8 +123,8 @@
                     <div class="m-auto grid h-[100vh] max-w-[362px] items-end">
                         <div class="grid gap-4">
                             <img
-                                src="{{ vite()->asset('images/krayin-logo.svg', 'installer') }}"
-                                alt="@lang('installer::app.installer.index.krayin-logo')"
+                                src="{{ vite()->asset('images/crm-logo.svg', 'installer') }}"
+                                alt="@lang('installer::app.installer.index.crm-logo')"
                             >
 
                             <div class="grid gap-1.5">
@@ -256,17 +250,17 @@
                         <p class="mb-6 w-full place-self-end text-left">
                             <a
                                 class="bg-white text-brandColor underline"
-                                href="https://krayincrm.com/"
+                                href="https://crmcrm.com/"
                                 target="_blank"
                             >
-                                @lang('installer::app.installer.index.krayin')
+                                @lang('installer::app.installer.index.crm')
                             </a>
 
-                            <span>@lang('installer::app.installer.index.krayin-info')</span>
+                            <span>@lang('installer::app.installer.index.crm-info')</span>
 
                             <a
                                 class="bg-white text-brandColor underline"
-                                href="https://webkul.com/"
+                                href="https://xyz.com/"
                                 target="_blank"
                             >
                                 @lang('installer::app.installer.index.webkul')
@@ -679,7 +673,7 @@
                     <div class="flex h-[484px] flex-col justify-center gap-4 overflow-y-auto px-7 py-4">
                         <div class="flex flex-col gap-4">
                             <p class="text-lg font-bold text-gray-800">
-                                @lang('installer::app.installer.index.installation-processing.krayin')
+                                @lang('installer::app.installer.index.installation-processing.crm')
                             </p>
 
                             <div class="grid gap-2.5">
@@ -691,7 +685,7 @@
                                 />
 
                                 <p class="text-sm text-gray-600">
-                                    @lang('installer::app.installer.index.installation-processing.krayin-info')
+                                    @lang('installer::app.installer.index.installation-processing.crm-info')
                                 </p>
                             </div>
                         </div>
@@ -728,10 +722,10 @@
                                     <x-installer::form.control-group.control
                                         type="text"
                                         name="app_name"
-                                        ::value="envData.app_name ?? 'Krayin'"
+                                        ::value="envData.app_name ?? 'CRM'"
                                         rules="required"
                                         :label="trans('installer::app.installer.index.environment-configuration.application-name')"
-                                        :placeholder="trans('installer::app.installer.index.environment-configuration.krayin')"
+                                        :placeholder="trans('installer::app.installer.index.environment-configuration.crm')"
                                     />
 
                                     <x-installer::form.control-group.error control-name="app_name" />
@@ -906,7 +900,7 @@
                                         rules="required"
                                         value="Admin"
                                         :label="trans('installer::app.installer.index.create-administrator.admin')"
-                                        :placeholder="trans('installer::app.installer.index.create-administrator.krayin')"
+                                        :placeholder="trans('installer::app.installer.index.create-administrator.crm')"
                                     />
 
                                     <x-installer::form.control-group.error control-name="admin" />
@@ -1020,17 +1014,17 @@
 
                     <div class="flex items-center justify-between px-4 py-2.5">
                         <a
-                            href="https://forums.krayincrm.com/"
+                            href="https://forums.crmcrm.com/"
                             class="cursor-pointer text-xs font-semibold text-brandColor"
                         >
-                            @lang('installer::app.installer.index.installation-completed.krayin-forums')
+                            @lang('installer::app.installer.index.installation-completed.crm-forums')
                         </a>
 
                         <a
-                            href="https://krayincrm.com/extensions/"
+                            href="https://crmcrm.com/extensions/"
                             class="cursor-pointer rounded-md border border-brandColor bg-white px-3 py-1.5 font-semibold text-brandColor hover:opacity-90"
                         >
-                            @lang('installer::app.installer.index.installation-completed.explore-krayin-extensions')
+                            @lang('installer::app.installer.index.installation-completed.explore-crm-extensions')
                         </a>
                     </div>
                 </div>
@@ -1096,7 +1090,7 @@
 
                                         this.envData = { ...this.envData, ...params };
                                     } else {
-                                        setErrors({ 'db_connection': ["Krayin currently supports MySQL only."] });
+                                        setErrors({ 'db_connection': ["CRM currently supports MySQL only."] });
                                     }
                                 },
 

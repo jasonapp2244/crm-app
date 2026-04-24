@@ -369,7 +369,7 @@ return [
 
         'layouts' => [
             'powered-by' => [
-                'description' => 'Powered by :krayin, an open-source project by :webkul.',
+                'description' => 'Powered by :crm, an open-source project by :xyz.',
             ],
 
             'header' => [
@@ -2306,6 +2306,10 @@ return [
             'trash' => 'Trash',
             'setting' => 'Setting',
         ],
+        'sms' => 'SMS & WhatsApp',
+        'sms-messages' => 'Messages',
+        'sms-numbers' => 'Twilio Numbers',
+        'sms-templates' => 'Templates',
         'activities' => 'Activities',
         'contacts' => 'Contacts',
         'persons' => 'Persons',
@@ -2453,5 +2457,131 @@ return [
         'no-records' => 'Nothing to export',
         'xls' => 'XLS',
         'xlsx' => 'XLSX',
+    ],
+
+    'sms' => [
+        'index' => [
+            'title'        => 'SMS & WhatsApp',
+            'compose-btn'       => 'Compose Message',
+            'manage-templates'  => 'Templates',
+            'send-success'      => 'Message sent successfully.',
+            'send-failed'       => 'Failed to send message.',
+            'schedule-success'  => 'Message scheduled successfully.',
+            'delete-success'    => 'Message deleted successfully.',
+
+            'stats' => [
+                'total-sent'      => 'Total Sent',
+                'total-received'  => 'Total Received',
+                'total-failed'    => 'Total Failed',
+                'today-sent'      => 'Today Sent',
+                'today-received'  => 'Today Received',
+            ],
+
+            'datagrid' => [
+                'id'        => 'ID',
+                'direction' => 'Direction',
+                'channel'   => 'Channel',
+                'from'      => 'From',
+                'to'        => 'To',
+                'message'   => 'Message',
+                'contact'   => 'Contact',
+                'status'    => 'Status',
+                'date'      => 'Date',
+                'view'      => 'View',
+                'delete'    => 'Delete',
+            ],
+
+            'compose' => [
+                'title'               => 'Compose Message',
+                'template'            => 'Template',
+                'select-template'     => 'Select a template',
+                'channel'             => 'Channel',
+                'to'                  => 'To',
+                'to-placeholder'      => 'Enter phone number (e.g., +1234567890)',
+                'message'             => 'Message',
+                'message-placeholder' => 'Type your message here...',
+                'send-btn'            => 'Send Message',
+                'schedule-btn'        => 'Schedule Message',
+                'schedule-message'    => 'Schedule for later',
+                'schedule-at'         => 'Send At',
+                'schedule-note'       => 'The message will be sent automatically at the scheduled time.',
+            ],
+        ],
+
+        'numbers' => [
+            'title'            => 'Twilio Numbers',
+            'add-btn'          => 'Add Number',
+            'back-to-messages' => 'Back to Messages',
+            'add-title'        => 'Add Twilio Number',
+            'edit-title'       => 'Edit Twilio Number',
+            'create-success'   => 'Twilio number added successfully.',
+            'update-success'   => 'Twilio number updated successfully.',
+            'delete-success'   => 'Twilio number deleted successfully.',
+
+            'datagrid' => [
+                'label'    => 'Label',
+                'phone'    => 'Phone Number',
+                'whatsapp' => 'WhatsApp',
+                'status'   => 'Status',
+                'messages' => 'Messages',
+                'date'     => 'Created',
+                'edit'     => 'Edit',
+                'delete'   => 'Delete',
+            ],
+
+            'form' => [
+                'label'             => 'Label',
+                'label-placeholder' => 'e.g., Sales Line, Support Line',
+                'phone'             => 'Phone Number',
+                'sid'               => 'Twilio Account SID',
+                'sid-placeholder'   => 'Leave empty to use default .env SID',
+                'token'             => 'Twilio Auth Token',
+                'token-placeholder' => 'Leave empty to use default .env token',
+                'whatsapp-enabled'  => 'WhatsApp enabled on this number',
+                'active'            => 'Active',
+                'save-btn'          => 'Save Number',
+                'sid-note'          => 'If SID and Token are left empty, the default credentials from .env will be used for this number.',
+            ],
+        ],
+
+        'conversation' => [
+            'title'           => 'Conversation',
+            'no-messages'     => 'No messages yet.',
+            'type-message'    => 'Type a message...',
+            'send-btn'        => 'Send',
+            'back'            => 'Back to Messages',
+        ],
+
+        'templates' => [
+            'title'            => 'SMS Templates',
+            'add-btn'          => 'Add Template',
+            'back-to-messages' => 'Back to Messages',
+            'add-title'        => 'Add Template',
+            'edit-title'       => 'Edit Template',
+            'create-success'   => 'Template created successfully.',
+            'update-success'   => 'Template updated successfully.',
+            'delete-success'   => 'Template deleted successfully.',
+
+            'datagrid' => [
+                'id'      => 'ID',
+                'name'    => 'Name',
+                'body'    => 'Message Body',
+                'channel' => 'Channel',
+                'status'  => 'Status',
+                'date'    => 'Created',
+                'edit'    => 'Edit',
+                'delete'  => 'Delete',
+            ],
+
+            'form' => [
+                'name'             => 'Template Name',
+                'name-placeholder' => 'e.g., Welcome Message, Payment Reminder',
+                'channel'          => 'Channel',
+                'body'             => 'Message Body',
+                'body-placeholder' => 'Type your template message here...',
+                'active'           => 'Active',
+                'save-btn'         => 'Save Template',
+            ],
+        ],
     ],
 ];

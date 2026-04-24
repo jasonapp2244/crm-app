@@ -8,7 +8,7 @@
     ],
     "license": "MIT",
     "require": {
-        "php": "^8.3",
+        "php": "^8.2",
         "barryvdh/laravel-dompdf": "^3.1",
         "diglactic/laravel-breadcrumbs": "^10.0",
         "enshrined/svg-sanitize": "^0.22.0",
@@ -24,6 +24,7 @@
         "mpdf/mpdf": "^8.2",
         "prettus/l5-repository": "^3.0",
         "smalot/pdfparser": "^2.11",
+        "twilio/sdk": "^8.11",
         "webklex/laravel-imap": "^6.0"
     },
     "require-dev": {
@@ -42,12 +43,17 @@
     "config": {
         "optimize-autoloader": true,
         "platform": {
-            "php": "8.3.30"
+            "php": "8.3.0",
+            "php-64bit": "8.3.0"
         },
         "preferred-install": "dist",
         "sort-packages": true,
         "allow-plugins": {
             "pestphp/pest-plugin": true
+        },
+        "platform-check": false,
+        "audit": {
+            "ignore": ["PKSA-21fb-n1x5-5nf7"]
         }
     },
     "extra": {
@@ -78,7 +84,8 @@
             "Webkul\\User\\": "packages/Webkul/User/src",
             "Webkul\\Warehouse\\": "packages/Webkul/Warehouse/src",
             "Webkul\\WebForm\\": "packages/Webkul/WebForm/src",
-            "Webkul\\Automation\\": "packages/Webkul/Automation/src"
+            "Webkul\\Automation\\": "packages/Webkul/Automation/src",
+            "Webkul\\SMS\\": "packages/Webkul/SMS/src"
         }
     },
     "autoload-dev": {
