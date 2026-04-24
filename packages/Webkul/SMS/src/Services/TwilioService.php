@@ -2,7 +2,12 @@
 
 namespace Webkul\SMS\Services;
 
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
 use Twilio\Rest\Client;
+use Webkul\Contact\Models\Person;
+use Webkul\SMS\Events\NewSMSMessage;
+use Webkul\SMS\Models\Message;
 use Webkul\SMS\Models\TwilioNumber;
 use Webkul\SMS\Repositories\MessageRepository;
 use Webkul\SMS\Repositories\TwilioNumberRepository;
@@ -24,10 +29,10 @@ class TwilioService
             if ($twilioNumberId) {
                 $number = $this->twilioNumberRepository->find($twilioNumberId);
 
-                $sid   = $number->twilio_sid ?: config('twilio.sid');
+                $sid = $number->twilio_sid ?: config('twilio.sid');
                 $token = $number->twilio_token ?: config('twilio.auth_token');
             } else {
-                $sid   = config('twilio.sid');
+                $sid = config('twilio.sid');
                 $token = config('twilio.auth_token');
             }
 
@@ -82,7 +87,7 @@ class TwilioService
         $templateId = $options['template_id'] ?? null;
 
         // If scheduled for the future, store without sending
-        if ($scheduledAt && \Carbon\Carbon::parse($scheduledAt)->isFuture()) {
+        if ($scheduledAt && Carbon::parse($scheduledAt)->isFuture()) {
             return $this->scheduleMessages($recipients, $body, $channel, $options);
         }
 
@@ -104,38 +109,38 @@ class TwilioService
                 ]);
 
                 $record = $this->messageRepository->create([
-                    'from'             => str_replace('whatsapp:', '', $from),
-                    'to'               => $to,
-                    'body'             => $body,
-                    'direction'        => 'outbound',
-                    'status'           => $message->status,
-                    'channel'          => $channel,
-                    'twilio_sid'       => $message->sid,
+                    'from' => str_replace('whatsapp:', '', $from),
+                    'to' => $to,
+                    'body' => $body,
+                    'direction' => 'outbound',
+                    'status' => $message->status,
+                    'channel' => $channel,
+                    'twilio_sid' => $message->sid,
                     'twilio_number_id' => $twilioNumberId,
-                    'person_id'        => $options['person_id'] ?? $this->findPersonByPhone($to),
-                    'lead_id'          => $options['lead_id'] ?? null,
-                    'user_id'          => $options['user_id'] ?? null,
-                    'template_id'      => $templateId,
+                    'person_id' => $options['person_id'] ?? $this->findPersonByPhone($to),
+                    'lead_id' => $options['lead_id'] ?? null,
+                    'user_id' => $options['user_id'] ?? null,
+                    'template_id' => $templateId,
                 ]);
 
-                event(new \Webkul\SMS\Events\NewSMSMessage($record));
+                event(new NewSMSMessage($record));
 
                 $results[] = ['to' => $to, 'success' => true, 'message_id' => $record->id];
                 $successCount++;
             } catch (\Exception $e) {
                 $this->messageRepository->create([
-                    'from'             => str_replace('whatsapp:', '', $from),
-                    'to'               => $to,
-                    'body'             => $body,
-                    'direction'        => 'outbound',
-                    'status'           => 'failed',
-                    'channel'          => $channel,
-                    'error_message'    => $e->getMessage(),
+                    'from' => str_replace('whatsapp:', '', $from),
+                    'to' => $to,
+                    'body' => $body,
+                    'direction' => 'outbound',
+                    'status' => 'failed',
+                    'channel' => $channel,
+                    'error_message' => $e->getMessage(),
                     'twilio_number_id' => $twilioNumberId,
-                    'person_id'        => $options['person_id'] ?? $this->findPersonByPhone($to),
-                    'lead_id'          => $options['lead_id'] ?? null,
-                    'user_id'          => $options['user_id'] ?? null,
-                    'template_id'      => $templateId,
+                    'person_id' => $options['person_id'] ?? $this->findPersonByPhone($to),
+                    'lead_id' => $options['lead_id'] ?? null,
+                    'user_id' => $options['user_id'] ?? null,
+                    'template_id' => $templateId,
                 ]);
 
                 $results[] = ['to' => $to, 'success' => false, 'error' => $e->getMessage()];
@@ -144,11 +149,11 @@ class TwilioService
         }
 
         return [
-            'success'       => $failCount === 0,
-            'total'         => count($recipients),
-            'sent'          => $successCount,
-            'failed'        => $failCount,
-            'results'       => $results,
+            'success' => $failCount === 0,
+            'total' => count($recipients),
+            'sent' => $successCount,
+            'failed' => $failCount,
+            'results' => $results,
         ];
     }
 
@@ -165,30 +170,30 @@ class TwilioService
             $to = trim($to);
 
             $this->messageRepository->create([
-                'from'             => str_replace('whatsapp:', '', $from),
-                'to'               => $to,
-                'body'             => $body,
-                'direction'        => 'outbound',
-                'status'           => 'scheduled',
-                'channel'          => $channel,
+                'from' => str_replace('whatsapp:', '', $from),
+                'to' => $to,
+                'body' => $body,
+                'direction' => 'outbound',
+                'status' => 'scheduled',
+                'channel' => $channel,
                 'twilio_number_id' => $twilioNumberId,
-                'person_id'        => $options['person_id'] ?? $this->findPersonByPhone($to),
-                'lead_id'          => $options['lead_id'] ?? null,
-                'user_id'          => $options['user_id'] ?? null,
-                'template_id'      => $options['template_id'] ?? null,
-                'scheduled_at'     => $options['scheduled_at'],
+                'person_id' => $options['person_id'] ?? $this->findPersonByPhone($to),
+                'lead_id' => $options['lead_id'] ?? null,
+                'user_id' => $options['user_id'] ?? null,
+                'template_id' => $options['template_id'] ?? null,
+                'scheduled_at' => $options['scheduled_at'],
             ]);
 
             $count++;
         }
 
         return [
-            'success'   => true,
-            'total'     => $count,
-            'sent'      => 0,
-            'failed'    => 0,
+            'success' => true,
+            'total' => $count,
+            'sent' => 0,
+            'failed' => 0,
             'scheduled' => $count,
-            'results'   => [],
+            'results' => [],
         ];
     }
 
@@ -197,7 +202,7 @@ class TwilioService
      */
     public function processScheduledMessages(): int
     {
-        $messages = \Webkul\SMS\Models\Message::where('status', 'scheduled')
+        $messages = Message::where('status', 'scheduled')
             ->where('scheduled_at', '<=', now())
             ->get();
 
@@ -217,16 +222,16 @@ class TwilioService
                 ]);
 
                 $msg->update([
-                    'status'     => $twilioMessage->status,
+                    'status' => $twilioMessage->status,
                     'twilio_sid' => $twilioMessage->sid,
                 ]);
 
-                event(new \Webkul\SMS\Events\NewSMSMessage($msg->fresh()));
+                event(new NewSMSMessage($msg->fresh()));
 
                 $sent++;
             } catch (\Exception $e) {
                 $msg->update([
-                    'status'        => 'failed',
+                    'status' => 'failed',
                     'error_message' => $e->getMessage(),
                 ]);
             }
@@ -241,30 +246,30 @@ class TwilioService
     public function handleInbound(array $data): void
     {
         $from = $data['From'] ?? '';
-        $to   = $data['To'] ?? '';
+        $to = $data['To'] ?? '';
         $body = $data['Body'] ?? '';
-        $sid  = $data['MessageSid'] ?? null;
+        $sid = $data['MessageSid'] ?? null;
 
         $channel = str_contains($from, 'whatsapp:') ? 'whatsapp' : 'sms';
         $from = str_replace('whatsapp:', '', $from);
-        $to   = str_replace('whatsapp:', '', $to);
+        $to = str_replace('whatsapp:', '', $to);
 
         // Find which Twilio number received this
         $twilioNumber = TwilioNumber::where('phone_number', $to)->first();
 
         $record = $this->messageRepository->create([
-            'from'             => $from,
-            'to'               => $to,
-            'body'             => $body,
-            'direction'        => 'inbound',
-            'status'           => 'received',
-            'channel'          => $channel,
-            'twilio_sid'       => $sid,
+            'from' => $from,
+            'to' => $to,
+            'body' => $body,
+            'direction' => 'inbound',
+            'status' => 'received',
+            'channel' => $channel,
+            'twilio_sid' => $sid,
             'twilio_number_id' => $twilioNumber?->id,
-            'person_id'        => $this->findPersonByPhone($from),
+            'person_id' => $this->findPersonByPhone($from),
         ]);
 
-        event(new \Webkul\SMS\Events\NewSMSMessage($record));
+        event(new NewSMSMessage($record));
     }
 
     /**
@@ -272,7 +277,7 @@ class TwilioService
      */
     public function findPersonByPhone(string $phone): ?int
     {
-        $person = \Webkul\Contact\Models\Person::where('contact_numbers', 'LIKE', '%'.$phone.'%')->first();
+        $person = Person::where('contact_numbers', 'LIKE', '%'.$phone.'%')->first();
 
         return $person?->id;
     }
@@ -280,9 +285,9 @@ class TwilioService
     /**
      * Get conversation history for a person.
      */
-    public function getConversation(int $personId): \Illuminate\Database\Eloquent\Collection
+    public function getConversation(int $personId): Collection
     {
-        return \Webkul\SMS\Models\Message::where('person_id', $personId)
+        return Message::where('person_id', $personId)
             ->with(['user', 'twilioNumber'])
             ->orderBy('created_at', 'asc')
             ->get();
@@ -291,11 +296,11 @@ class TwilioService
     /**
      * Get conversation history by phone number.
      */
-    public function getConversationByPhone(string $phone): \Illuminate\Database\Eloquent\Collection
+    public function getConversationByPhone(string $phone): Collection
     {
-        return \Webkul\SMS\Models\Message::where(function ($query) use ($phone) {
-                $query->where('from', $phone)->orWhere('to', $phone);
-            })
+        return Message::where(function ($query) use ($phone) {
+            $query->where('from', $phone)->orWhere('to', $phone);
+        })
             ->with(['user', 'twilioNumber', 'person'])
             ->orderBy('created_at', 'asc')
             ->get();
@@ -306,14 +311,14 @@ class TwilioService
      */
     public function getStats(): array
     {
-        $base = \Webkul\SMS\Models\Message::query();
+        $base = Message::query();
 
         return [
-            'total_sent'      => (clone $base)->where('direction', 'outbound')->count(),
-            'total_received'  => (clone $base)->where('direction', 'inbound')->count(),
-            'total_failed'    => (clone $base)->where('status', 'failed')->count(),
-            'today_sent'      => (clone $base)->where('direction', 'outbound')->whereDate('created_at', today())->count(),
-            'today_received'  => (clone $base)->where('direction', 'inbound')->whereDate('created_at', today())->count(),
+            'total_sent' => (clone $base)->where('direction', 'outbound')->count(),
+            'total_received' => (clone $base)->where('direction', 'inbound')->count(),
+            'total_failed' => (clone $base)->where('status', 'failed')->count(),
+            'today_sent' => (clone $base)->where('direction', 'outbound')->whereDate('created_at', today())->count(),
+            'today_received' => (clone $base)->where('direction', 'inbound')->whereDate('created_at', today())->count(),
         ];
     }
 }

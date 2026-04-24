@@ -5,7 +5,9 @@ namespace Webkul\Admin\Http\Controllers\SMS;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
+use Webkul\Admin\DataGrids\SMS\TemplateDataGrid;
 use Webkul\Admin\Http\Controllers\Controller;
+use Webkul\SMS\Models\Template;
 use Webkul\SMS\Repositories\TemplateRepository;
 
 class TemplateController extends Controller
@@ -17,7 +19,7 @@ class TemplateController extends Controller
     public function index(): View|JsonResponse
     {
         if (request()->ajax()) {
-            return datagrid(\Webkul\Admin\DataGrids\SMS\TemplateDataGrid::class)->process();
+            return datagrid(TemplateDataGrid::class)->process();
         }
 
         return view('admin::sms.templates.index');
@@ -26,8 +28,8 @@ class TemplateController extends Controller
     public function store(Request $request): JsonResponse
     {
         $request->validate([
-            'name'    => 'required|string|max:255',
-            'body'    => 'required|string',
+            'name' => 'required|string|max:255',
+            'body' => 'required|string',
             'channel' => 'required|in:sms,whatsapp,both',
         ]);
 
@@ -50,9 +52,9 @@ class TemplateController extends Controller
     public function update(Request $request, int $id): JsonResponse
     {
         $request->validate([
-            'name'      => 'required|string|max:255',
-            'body'      => 'required|string',
-            'channel'   => 'required|in:sms,whatsapp,both',
+            'name' => 'required|string|max:255',
+            'body' => 'required|string',
+            'channel' => 'required|in:sms,whatsapp,both',
             'is_active' => 'sometimes|boolean',
         ]);
 
@@ -78,7 +80,7 @@ class TemplateController extends Controller
     {
         $channel = $request->input('channel');
 
-        $query = \Webkul\SMS\Models\Template::active();
+        $query = Template::active();
 
         if ($channel && $channel !== 'both') {
             $query->where(function ($q) use ($channel) {

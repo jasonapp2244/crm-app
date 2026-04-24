@@ -18,16 +18,16 @@ class NewSMSMessage implements ShouldBroadcast
     public function __construct(public Message $message)
     {
         $this->messageData = [
-            'id'          => $message->id,
-            'from'        => $message->from,
-            'to'          => $message->to,
-            'body'        => $message->body,
-            'direction'   => $message->direction,
-            'status'      => $message->status,
-            'channel'     => $message->channel,
-            'person_id'   => $message->person_id,
-            'user_id'     => $message->user_id,
-            'created_at'  => $message->created_at?->format('M d, h:i A'),
+            'id' => $message->id,
+            'from' => $message->from,
+            'to' => $message->to,
+            'body' => $message->body,
+            'direction' => $message->direction,
+            'status' => $message->status,
+            'channel' => $message->channel,
+            'person_id' => $message->person_id,
+            'user_id' => $message->user_id,
+            'created_at' => $message->created_at?->format('M d, h:i A'),
             'twilio_number_label' => $message->twilioNumber?->label,
         ];
     }

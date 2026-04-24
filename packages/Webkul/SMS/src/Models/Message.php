@@ -5,8 +5,8 @@ namespace Webkul\SMS\Models;
 use Illuminate\Database\Eloquent\Model;
 use Webkul\Contact\Models\PersonProxy;
 use Webkul\Lead\Models\LeadProxy;
-use Webkul\User\Models\UserProxy;
 use Webkul\SMS\Contracts\Message as MessageContract;
+use Webkul\User\Models\UserProxy;
 
 class Message extends Model implements MessageContract
 {
@@ -30,8 +30,8 @@ class Message extends Model implements MessageContract
     ];
 
     protected $casts = [
-        'created_at'   => 'datetime',
-        'updated_at'   => 'datetime',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
         'scheduled_at' => 'datetime',
     ];
 

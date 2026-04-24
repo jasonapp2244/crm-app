@@ -20,7 +20,7 @@ class TwilioNumber extends Model implements TwilioNumberContract
 
     protected $casts = [
         'is_whatsapp' => 'boolean',
-        'is_active'   => 'boolean',
+        'is_active' => 'boolean',
     ];
 
     public function messages()

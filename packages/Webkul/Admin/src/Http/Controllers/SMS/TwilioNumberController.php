@@ -5,6 +5,7 @@ namespace Webkul\Admin\Http\Controllers\SMS;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
+use Webkul\Admin\DataGrids\SMS\TwilioNumberDataGrid;
 use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\SMS\Repositories\TwilioNumberRepository;
 
@@ -17,7 +18,7 @@ class TwilioNumberController extends Controller
     public function index(): View|JsonResponse
     {
         if (request()->ajax()) {
-            return datagrid(\Webkul\Admin\DataGrids\SMS\TwilioNumberDataGrid::class)->process();
+            return datagrid(TwilioNumberDataGrid::class)->process();
         }
 
         return view('admin::sms.numbers.index');
@@ -26,11 +27,11 @@ class TwilioNumberController extends Controller
     public function store(Request $request): JsonResponse
     {
         $request->validate([
-            'label'        => 'required|string|max:255',
+            'label' => 'required|string|max:255',
             'phone_number' => 'required|string|max:20',
-            'twilio_sid'   => 'nullable|string|max:255',
+            'twilio_sid' => 'nullable|string|max:255',
             'twilio_token' => 'nullable|string|max:255',
-            'is_whatsapp'  => 'sometimes|boolean',
+            'is_whatsapp' => 'sometimes|boolean',
         ]);
 
         $this->twilioNumberRepository->create($request->only([
@@ -52,12 +53,12 @@ class TwilioNumberController extends Controller
     public function update(Request $request, int $id): JsonResponse
     {
         $request->validate([
-            'label'        => 'required|string|max:255',
+            'label' => 'required|string|max:255',
             'phone_number' => 'required|string|max:20',
-            'twilio_sid'   => 'nullable|string|max:255',
+            'twilio_sid' => 'nullable|string|max:255',
             'twilio_token' => 'nullable|string|max:255',
-            'is_whatsapp'  => 'sometimes|boolean',
-            'is_active'    => 'sometimes|boolean',
+            'is_whatsapp' => 'sometimes|boolean',
+            'is_active' => 'sometimes|boolean',
         ]);
 
         $this->twilioNumberRepository->update($request->only([

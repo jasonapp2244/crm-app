@@ -35,91 +35,91 @@ class TwilioNumberDataGrid extends DataGrid
     public function prepareColumns(): void
     {
         $this->addColumn([
-            'index'      => 'id',
-            'label'      => 'ID',
-            'type'       => 'integer',
+            'index' => 'id',
+            'label' => 'ID',
+            'type' => 'integer',
             'searchable' => false,
             'filterable' => true,
-            'sortable'   => true,
+            'sortable' => true,
         ]);
 
         $this->addColumn([
-            'index'      => 'label',
-            'label'      => trans('admin::app.sms.numbers.datagrid.label'),
-            'type'       => 'string',
+            'index' => 'label',
+            'label' => trans('admin::app.sms.numbers.datagrid.label'),
+            'type' => 'string',
             'searchable' => true,
             'filterable' => true,
-            'sortable'   => true,
+            'sortable' => true,
         ]);
 
         $this->addColumn([
-            'index'      => 'phone_number',
-            'label'      => trans('admin::app.sms.numbers.datagrid.phone'),
-            'type'       => 'string',
+            'index' => 'phone_number',
+            'label' => trans('admin::app.sms.numbers.datagrid.phone'),
+            'type' => 'string',
             'searchable' => true,
             'filterable' => true,
-            'sortable'   => true,
+            'sortable' => true,
         ]);
 
         $this->addColumn([
-            'index'      => 'is_whatsapp',
-            'label'      => trans('admin::app.sms.numbers.datagrid.whatsapp'),
-            'type'       => 'boolean',
+            'index' => 'is_whatsapp',
+            'label' => trans('admin::app.sms.numbers.datagrid.whatsapp'),
+            'type' => 'boolean',
             'searchable' => false,
             'filterable' => true,
-            'sortable'   => true,
-            'closure'    => fn ($row) => $row->is_whatsapp
+            'sortable' => true,
+            'closure' => fn ($row) => $row->is_whatsapp
                 ? '<span class="label-active">Yes</span>'
                 : '<span class="label-info">No</span>',
         ]);
 
         $this->addColumn([
-            'index'      => 'is_active',
-            'label'      => trans('admin::app.sms.numbers.datagrid.status'),
-            'type'       => 'boolean',
+            'index' => 'is_active',
+            'label' => trans('admin::app.sms.numbers.datagrid.status'),
+            'type' => 'boolean',
             'searchable' => false,
             'filterable' => true,
-            'sortable'   => true,
-            'closure'    => fn ($row) => $row->is_active
+            'sortable' => true,
+            'closure' => fn ($row) => $row->is_active
                 ? '<span class="label-active">Active</span>'
                 : '<span class="label-canceled">Inactive</span>',
         ]);
 
         $this->addColumn([
-            'index'      => 'messages_count',
-            'label'      => trans('admin::app.sms.numbers.datagrid.messages'),
-            'type'       => 'integer',
+            'index' => 'messages_count',
+            'label' => trans('admin::app.sms.numbers.datagrid.messages'),
+            'type' => 'integer',
             'searchable' => false,
             'filterable' => false,
-            'sortable'   => true,
+            'sortable' => true,
         ]);
 
         $this->addColumn([
-            'index'      => 'created_at',
-            'label'      => trans('admin::app.sms.numbers.datagrid.date'),
-            'type'       => 'date_range',
+            'index' => 'created_at',
+            'label' => trans('admin::app.sms.numbers.datagrid.date'),
+            'type' => 'date_range',
             'searchable' => false,
             'filterable' => true,
-            'sortable'   => true,
+            'sortable' => true,
         ]);
     }
 
     public function prepareActions(): void
     {
         $this->addAction([
-            'index'  => 'edit',
-            'icon'   => 'icon-edit',
-            'title'  => trans('admin::app.sms.numbers.datagrid.edit'),
+            'index' => 'edit',
+            'icon' => 'icon-edit',
+            'title' => trans('admin::app.sms.numbers.datagrid.edit'),
             'method' => 'GET',
-            'url'    => fn ($row) => route('admin.sms.numbers.edit', $row->id),
+            'url' => fn ($row) => route('admin.sms.numbers.edit', $row->id),
         ]);
 
         $this->addAction([
-            'index'  => 'delete',
-            'icon'   => 'icon-delete',
-            'title'  => trans('admin::app.sms.numbers.datagrid.delete'),
+            'index' => 'delete',
+            'icon' => 'icon-delete',
+            'title' => trans('admin::app.sms.numbers.datagrid.delete'),
             'method' => 'DELETE',
-            'url'    => fn ($row) => route('admin.sms.numbers.delete', $row->id),
+            'url' => fn ($row) => route('admin.sms.numbers.delete', $row->id),
         ]);
     }
 }
