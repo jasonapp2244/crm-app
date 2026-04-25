@@ -27,6 +27,7 @@
         "mitt": "^3.0.1",
         "playwright": "^1.48.1",
         "readline-sync": "^1.4.10",
+        "tinymce": "^6.8.6",
         "vee-validate": "^4.9.1",
         "vue-cal": "^4.9.0",
         "vue-flatpickr": "^2.3.0",
