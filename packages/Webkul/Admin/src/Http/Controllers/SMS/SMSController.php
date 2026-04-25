@@ -123,9 +123,13 @@ class SMSController extends Controller
         return response()->json(['data' => $messages]);
     }
 
-    public function view(int $id): JsonResponse
+    public function view(int $id): JsonResponse|\Illuminate\Http\RedirectResponse
     {
         $message = $this->messageRepository->with(['person', 'lead', 'user', 'twilioNumber'])->findOrFail($id);
+
+        if (! request()->ajax()) {
+            return redirect()->route('admin.sms.index');
+        }
 
         return response()->json(['data' => $message]);
     }

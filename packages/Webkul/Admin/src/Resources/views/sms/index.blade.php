@@ -75,160 +75,7 @@
                 ref="datagrid"
                 :src="route('admin.sms.index')"
             >
-                <template #body="{
-                    isLoading,
-                    available,
-                    applied,
-                    selectAll,
-                    sort,
-                    performAction
-                }">
-                    <template v-if="isLoading">
-                        <x-admin::shimmer.datagrid.table.body />
-                    </template>
-
-                    <template v-else>
-                        <!-- Desktop View -->
-                        <div
-                            v-for="record in available.records"
-                            class="row grid items-center gap-2.5 border-b px-4 py-4 text-gray-600 transition-all hover:bg-gray-50 dark:border-gray-800 dark:text-gray-300 dark:hover:bg-gray-950 max-lg:hidden"
-                            :style="`grid-template-columns: repeat(${available.columns.length + (available.actions.length ? 1 : 0)}, minmax(0, 1fr))`"
-                        >
-                            <p>@{{ record.id }}</p>
-                            <p v-html="record.direction"></p>
-                            <p>@{{ record.channel }}</p>
-                            <p>@{{ record.from }}</p>
-                            <p>@{{ record.to }}</p>
-                            <p>@{{ record.body }}</p>
-                            <p v-html="record.person_name"></p>
-                            <p v-html="record.status"></p>
-                            <p>@{{ record.created_at }}</p>
-
-                            <!-- Actions -->
-                            <div class="flex justify-end">
-                                <a @click="viewMessage(record.actions.find(action => action.index === 'view')?.url)">
-                                    <span
-                                        :class="record.actions.find(action => action.index === 'view')?.icon"
-                                        class="cursor-pointer rounded-md p-1.5 text-2xl transition-all hover:bg-gray-200 dark:hover:bg-gray-800"
-                                    ></span>
-                                </a>
-
-                                <a @click="performAction(record.actions.find(action => action.index === 'delete'))">
-                                    <span
-                                        :class="record.actions.find(action => action.index === 'delete')?.icon"
-                                        class="cursor-pointer rounded-md p-1.5 text-2xl transition-all hover:bg-gray-200 dark:hover:bg-gray-800"
-                                    ></span>
-                                </a>
-                            </div>
-                        </div>
-
-                        <!-- Mobile Card View -->
-                        <div
-                            class="hidden border-b px-4 py-4 text-black dark:border-gray-800 dark:text-gray-300 max-lg:block"
-                            v-for="record in available.records"
-                        >
-                            <div class="mb-2 flex items-center justify-end gap-2">
-                                <a @click="viewMessage(record.actions.find(action => action.index === 'view')?.url)">
-                                    <span
-                                        :class="record.actions.find(action => action.index === 'view')?.icon"
-                                        class="cursor-pointer rounded-md p-1.5 text-2xl transition-all hover:bg-gray-200 dark:hover:bg-gray-800"
-                                    ></span>
-                                </a>
-
-                                <a @click="performAction(record.actions.find(action => action.index === 'delete'))">
-                                    <span
-                                        :class="record.actions.find(action => action.index === 'delete')?.icon"
-                                        class="cursor-pointer rounded-md p-1.5 text-2xl transition-all hover:bg-gray-200 dark:hover:bg-gray-800"
-                                    ></span>
-                                </a>
-                            </div>
-
-                            <div class="grid gap-2">
-                                <template v-for="column in available.columns">
-                                    <div class="flex flex-wrap items-baseline gap-x-2">
-                                        <span class="text-slate-600 dark:text-gray-300" v-html="column.label + ':'"></span>
-                                        <span class="break-words font-medium text-slate-900 dark:text-white" v-html="record[column.index]"></span>
-                                    </div>
-                                </template>
-                            </div>
-                        </div>
-                    </template>
-                </template>
             </x-admin::datagrid>
-
-            <!-- View Message Modal -->
-            <x-admin::modal ref="viewModal">
-                <x-slot:header>
-                    <h3 class="text-lg font-bold text-gray-800 dark:text-white">
-                        Message Details
-                    </h3>
-                </x-slot>
-
-                <x-slot:content>
-                    <div v-if="viewData" class="grid gap-3">
-                        <div class="flex items-center justify-between">
-                            <span class="text-sm font-medium text-gray-600 dark:text-gray-400">Direction</span>
-                            <span class="text-sm font-semibold" :class="viewData.direction === 'inbound' ? 'text-green-600' : 'text-blue-600'">
-                                @{{ viewData.direction === 'inbound' ? 'Inbound' : 'Outbound' }}
-                            </span>
-                        </div>
-
-                        <div class="flex items-center justify-between">
-                            <span class="text-sm font-medium text-gray-600 dark:text-gray-400">Channel</span>
-                            <span class="text-sm dark:text-white">@{{ viewData.channel }}</span>
-                        </div>
-
-                        <div class="flex items-center justify-between">
-                            <span class="text-sm font-medium text-gray-600 dark:text-gray-400">From</span>
-                            <span class="text-sm dark:text-white">@{{ viewData.from }}</span>
-                        </div>
-
-                        <div class="flex items-center justify-between">
-                            <span class="text-sm font-medium text-gray-600 dark:text-gray-400">To</span>
-                            <span class="text-sm dark:text-white">@{{ viewData.to }}</span>
-                        </div>
-
-                        <div class="flex items-center justify-between">
-                            <span class="text-sm font-medium text-gray-600 dark:text-gray-400">Status</span>
-                            <span class="text-sm font-semibold" :class="{
-                                'text-green-600': ['sent','delivered','received'].includes(viewData.status),
-                                'text-yellow-600': ['queued','scheduled'].includes(viewData.status),
-                                'text-red-600': viewData.status === 'failed'
-                            }">@{{ viewData.status }}</span>
-                        </div>
-
-                        <div v-if="viewData.person">
-                            <span class="text-sm font-medium text-gray-600 dark:text-gray-400">Contact</span>
-                            <p class="text-sm dark:text-white">@{{ viewData.person.name }}</p>
-                        </div>
-
-                        <div v-if="viewData.user">
-                            <span class="text-sm font-medium text-gray-600 dark:text-gray-400">Sent By</span>
-                            <p class="text-sm dark:text-white">@{{ viewData.user.name }}</p>
-                        </div>
-
-                        <div v-if="viewData.twilio_number">
-                            <span class="text-sm font-medium text-gray-600 dark:text-gray-400">Twilio Number</span>
-                            <p class="text-sm dark:text-white">@{{ viewData.twilio_number.label }} (@{{ viewData.twilio_number.phone_number }})</p>
-                        </div>
-
-                        <div>
-                            <span class="text-sm font-medium text-gray-600 dark:text-gray-400">Date</span>
-                            <p class="text-sm dark:text-white">@{{ viewData.created_at }}</p>
-                        </div>
-
-                        <div class="border-t pt-3 dark:border-gray-700">
-                            <span class="text-sm font-medium text-gray-600 dark:text-gray-400">Message</span>
-                            <p class="mt-1 whitespace-pre-wrap rounded-md bg-gray-50 p-3 text-sm dark:bg-gray-800 dark:text-white">@{{ viewData.body }}</p>
-                        </div>
-
-                        <div v-if="viewData.error_message" class="rounded-md bg-red-50 p-3 dark:bg-red-900/20">
-                            <span class="text-sm font-medium text-red-600">Error</span>
-                            <p class="text-sm text-red-500">@{{ viewData.error_message }}</p>
-                        </div>
-                    </div>
-                </x-slot>
-            </x-admin::modal>
 
             <!-- Compose SMS Modal -->
             <x-admin::form
@@ -426,8 +273,6 @@
                         isScheduled: false,
                         selectedTemplateId: '',
                         templates: [],
-                        viewData: null,
-
                         form: {
                             twilio_number_id: '',
                             channel: 'sms',
@@ -454,17 +299,6 @@
                 methods: {
                     toggleModal() {
                         this.$refs.toggleComposeModal.toggle();
-                    },
-
-                    viewMessage(url) {
-                        this.$axios.get(url)
-                            .then(response => {
-                                this.viewData = response.data.data;
-                                this.$refs.viewModal.toggle();
-                            })
-                            .catch(error => {
-                                this.$emitter.emit('add-flash', { type: 'error', message: 'Failed to load message.' });
-                            });
                     },
 
                     loadTemplates() {

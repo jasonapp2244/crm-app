@@ -42,9 +42,13 @@ class TemplateController extends Controller
         ]);
     }
 
-    public function edit(int $id): JsonResponse
+    public function edit(int $id): JsonResponse|\Illuminate\Http\RedirectResponse
     {
         $template = $this->templateRepository->findOrFail($id);
+
+        if (! request()->ajax()) {
+            return redirect()->route('admin.sms.templates.index');
+        }
 
         return response()->json(['data' => $template]);
     }

@@ -43,9 +43,13 @@ class TwilioNumberController extends Controller
         ]);
     }
 
-    public function edit(int $id): JsonResponse
+    public function edit(int $id): JsonResponse|\Illuminate\Http\RedirectResponse
     {
         $number = $this->twilioNumberRepository->findOrFail($id);
+
+        if (! request()->ajax()) {
+            return redirect()->route('admin.sms.numbers.index');
+        }
 
         return response()->json(['data' => $number]);
     }
