@@ -40,18 +40,101 @@
             <x-admin::datagrid
                 ref="datagrid"
                 :src="route('admin.sms.numbers.index')"
-            />
+            >
+                <template #body="{
+                    isLoading,
+                    available,
+                    applied,
+                    selectAll,
+                    sort,
+                    performAction
+                }">
+                    <template v-if="isLoading">
+                        <x-admin::shimmer.datagrid.table.body />
+                    </template>
+
+                    <template v-else>
+                        <!-- Desktop View -->
+                        <div
+                            v-for="record in available.records"
+                            class="row grid items-center gap-2.5 border-b px-4 py-4 text-gray-600 transition-all hover:bg-gray-50 dark:border-gray-800 dark:text-gray-300 dark:hover:bg-gray-950 max-lg:hidden"
+                            :style="`grid-template-columns: repeat(${available.columns.length + (available.actions.length ? 1 : 0)}, minmax(0, 1fr))`"
+                        >
+                            <p>@{{ record.id }}</p>
+                            <p>@{{ record.label }}</p>
+                            <p>@{{ record.phone_number }}</p>
+                            <p v-html="record.is_whatsapp"></p>
+                            <p v-html="record.is_active"></p>
+                            <p>@{{ record.messages_count }}</p>
+                            <p>@{{ record.created_at }}</p>
+
+                            <!-- Actions -->
+                            <div class="flex justify-end">
+                                <a @click="editModal(record.actions.find(action => action.index === 'edit')?.url)">
+                                    <span
+                                        :class="record.actions.find(action => action.index === 'edit')?.icon"
+                                        class="cursor-pointer rounded-md p-1.5 text-2xl transition-all hover:bg-gray-200 dark:hover:bg-gray-800"
+                                    ></span>
+                                </a>
+
+                                <a @click="performAction(record.actions.find(action => action.index === 'delete'))">
+                                    <span
+                                        :class="record.actions.find(action => action.index === 'delete')?.icon"
+                                        class="cursor-pointer rounded-md p-1.5 text-2xl transition-all hover:bg-gray-200 dark:hover:bg-gray-800"
+                                    ></span>
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Mobile Card View -->
+                        <div
+                            class="hidden border-b px-4 py-4 text-black dark:border-gray-800 dark:text-gray-300 max-lg:block"
+                            v-for="record in available.records"
+                        >
+                            <div class="mb-2 flex items-center justify-end gap-2">
+                                <a @click="editModal(record.actions.find(action => action.index === 'edit')?.url)">
+                                    <span
+                                        :class="record.actions.find(action => action.index === 'edit')?.icon"
+                                        class="cursor-pointer rounded-md p-1.5 text-2xl transition-all hover:bg-gray-200 dark:hover:bg-gray-800"
+                                    ></span>
+                                </a>
+
+                                <a @click="performAction(record.actions.find(action => action.index === 'delete'))">
+                                    <span
+                                        :class="record.actions.find(action => action.index === 'delete')?.icon"
+                                        class="cursor-pointer rounded-md p-1.5 text-2xl transition-all hover:bg-gray-200 dark:hover:bg-gray-800"
+                                    ></span>
+                                </a>
+                            </div>
+
+                            <div class="grid gap-2">
+                                <template v-for="column in available.columns">
+                                    <div class="flex flex-wrap items-baseline gap-x-2">
+                                        <span class="text-slate-600 dark:text-gray-300" v-html="column.label + ':'"></span>
+                                        <span class="break-words font-medium text-slate-900 dark:text-white" v-html="record[column.index]"></span>
+                                    </div>
+                                </template>
+                            </div>
+                        </div>
+                    </template>
+                </template>
+            </x-admin::datagrid>
 
             <!-- Add/Edit Modal -->
             <x-admin::form
                 v-slot="{ meta, errors, handleSubmit }"
                 as="div"
+                ref="modalForm"
             >
                 <form @submit="handleSubmit($event, save)" ref="numberForm">
                     <x-admin::modal ref="numberModal" position="bottom-right">
                         <x-slot:header>
                             <h3 class="text-lg font-bold text-gray-800 dark:text-white">
-                                @{{ isEditing ? '@lang('admin::app.sms.numbers.edit-title')' : '@lang('admin::app.sms.numbers.add-title')' }}
+                                @{{
+                                    isEditing
+                                    ? "{{ trans('admin::app.sms.numbers.edit-title') }}"
+                                    : "{{ trans('admin::app.sms.numbers.add-title') }}"
+                                }}
                             </h3>
                         </x-slot>
 
@@ -214,10 +297,19 @@
                         this.$refs.numberModal.toggle();
                     },
 
-                    openEdit(data) {
-                        this.isEditing = true;
-                        this.form = { ...data, twilio_token: '' };
-                        this.$refs.numberModal.toggle();
+                    editModal(url) {
+                        this.$axios.get(url)
+                            .then(response => {
+                                this.isEditing = true;
+                                this.form = {
+                                    ...response.data.data,
+                                    twilio_token: '',
+                                };
+                                this.$refs.numberModal.toggle();
+                            })
+                            .catch(error => {
+                                this.$emitter.emit('add-flash', { type: 'error', message: 'Failed to load number data.' });
+                            });
                     },
 
                     save(params, { resetForm, setErrors }) {

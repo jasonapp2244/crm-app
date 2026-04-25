@@ -30,12 +30,16 @@ class ImageCacheController
      */
     public function getImage($filename)
     {
-        try {
-            $content = Cache::remember('crm-logo', 10080, function () {
-                return $this->getImageFromUrl(self::KRAYIN_LOGO);
-            });
-        } catch (\Exception $e) {
-            $content = '';
+        $content = '';
+
+        if (! empty(self::KRAYIN_LOGO)) {
+            try {
+                $content = Cache::remember('crm-logo', 10080, function () {
+                    return $this->getImageFromUrl(self::KRAYIN_LOGO);
+                });
+            } catch (\Exception $e) {
+                $content = '';
+            }
         }
 
         return $this->buildResponse($content);
