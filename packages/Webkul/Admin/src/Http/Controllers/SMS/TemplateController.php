@@ -3,6 +3,7 @@
 namespace Webkul\Admin\Http\Controllers\SMS;
 
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Webkul\Admin\DataGrids\SMS\TemplateDataGrid;
@@ -42,7 +43,7 @@ class TemplateController extends Controller
         ]);
     }
 
-    public function edit(int $id): JsonResponse|\Illuminate\Http\RedirectResponse
+    public function edit(int $id): JsonResponse|RedirectResponse
     {
         $template = $this->templateRepository->findOrFail($id);
 

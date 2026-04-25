@@ -3,6 +3,7 @@
 namespace Webkul\Admin\Http\Controllers\SMS;
 
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Webkul\Admin\DataGrids\SMS\SMSDataGrid;
@@ -123,7 +124,7 @@ class SMSController extends Controller
         return response()->json(['data' => $messages]);
     }
 
-    public function view(int $id): JsonResponse|\Illuminate\Http\RedirectResponse
+    public function view(int $id): JsonResponse|RedirectResponse
     {
         $message = $this->messageRepository->with(['person', 'lead', 'user', 'twilioNumber'])->findOrFail($id);
 
